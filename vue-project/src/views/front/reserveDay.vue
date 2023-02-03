@@ -1,4 +1,4 @@
-<template>reserve</template>
+<template>reserveDay</template>
 
 <style lang="scss"></style>
 

@@ -22,8 +22,18 @@ const router = createRouter({
           },
         },
         {
-          path: "FriendlyInformation",
-          name: "FriendlyInformation",
+          path: "memberLogin",
+          name: "memberLogin",
+          component: () => import("@/views/front/memberLoginView.vue"),
+          meta: {
+            title: "登入|註冊",
+            login: false,
+            admin: false,
+          },
+        },
+        {
+          path: "friendlyInformation",
+          name: "friendlyInformation",
           component: () => import("@/views/front/FriendlyInformation.vue"),
           meta: {
             title: "友善資訊",
@@ -32,9 +42,9 @@ const router = createRouter({
           },
         },
         {
-          path: "AboutMe",
-          name: "AboutMe",
-          component: () => import("@/views/front/AboutMe.vue"),
+          path: "aboutMe",
+          name: "aboutMe",
+          component: () => import("@/views/front/AboutMeView.vue"),
           meta: {
             title: "關於我們",
             login: false,
@@ -42,42 +52,82 @@ const router = createRouter({
           },
         },
         {
-          path: "Animal",
-          name: "Animal",
-          component: () => import("@/views/front/Animal.vue"),
+          path: "animals",
+          name: "animals",
+          component: () => import("@/views/front/animalsView.vue"),
           meta: {
             title: "認養毛孩",
-            login: true,
-            admin: false,
-          },
-        },
-        {
-          path: "Reserve",
-          name: "Reserve",
-          component: () => import("@/views/front/Reserve.vue"),
-          meta: {
-            title: "預約",
-            login: true,
-            admin: false,
-          },
-        },
-        {
-          path: "LoginView",
-          name: "LoginView",
-          component: () => import("@/views/front/LoginView.vue"),
-          meta: {
-            title: "登入",
             login: false,
             admin: false,
           },
         },
         {
-          path: "RegisterView",
-          name: "RegisterView",
-          component: () => import("@/views/front/RegisterView.vue"),
+          path: "animals/:id",
+          name: "animal",
+          component: () => import("@/views/front/animal.vue"),
           meta: {
-            title: "註冊",
+            title: "個別毛孩頁面",
             login: false,
+            admin: false,
+          },
+        },
+        {
+          path: "shelters",
+          name: "shelters",
+          component: () => import("@/views/front/sheltersView.vue"),
+          meta: {
+            title: "所有收容所",
+            login: false,
+            admin: false,
+          },
+        },
+        {
+          path: "chooseShelter",
+          name: "chooseShelter",
+          component: () => import("@/views/front/chooseShelter.vue"),
+          meta: {
+            title: "個別收容所",
+            login: false,
+            admin: false,
+          },
+        },
+        {
+          path: "reserveDay",
+          name: "reserveDay",
+          component: () => import("@/views/front/reserveDay.vue"),
+          meta: {
+            title: "預約日期",
+            login: true,
+            admin: false,
+          },
+        },
+        {
+          path: "memberLogin/:id",
+          name: "member",
+          component: () => import("@/views/front/member.vue"),
+          meta: {
+            title: "會員資料頁面",
+            login: true,
+            admin: false,
+          },
+        },
+        {
+          path: "memberLogin/:id/animals",
+          name: "memberAnimals",
+          component: () => import("@/views/front/memberAnimals.vue"),
+          meta: {
+            title: "會員毛孩收藏",
+            login: true,
+            admin: false,
+          },
+        },
+        {
+          path: "memberLogin/:id/reservel",
+          name: "memberReservel",
+          component: () => import("@/views/front/memberReservel.vue"),
+          meta: {
+            title: "會員預約",
+            login: true,
             admin: false,
           },
         },

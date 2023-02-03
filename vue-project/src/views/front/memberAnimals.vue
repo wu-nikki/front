@@ -1,4 +1,4 @@
-<template>RegisterView</template>
+<template>會員毛孩收藏</template>
 
 <style lang="scss"></style>
 

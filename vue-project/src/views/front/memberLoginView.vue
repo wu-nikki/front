@@ -60,7 +60,7 @@
     bottom: 0;
     right: 0;
 
-    width: 500px;
+    width: calc(350px + 9vw);
   }
 }
 </style>

@@ -7,7 +7,7 @@
         </div>
 
         <div class="menu">
-          <n-button id="bar" quaternary circle>
+          <n-button id="bar" quaternary circle @click="activate('right')">
             <template #icon>
               <n-icon
                 ><svg
@@ -23,12 +23,7 @@
               </n-icon>
             </template>
           </n-button>
-
-          <n-menu
-            v-model:value="activeKey"
-            mode="horizontal"
-            :options="menuOptions"
-          />
+          <n-menu v-if="active" mode="horizontal" :options="menuOptions" />
         </div>
       </div>
     </div>
@@ -52,14 +47,15 @@
       width: 60px;
     }
   }
+
   .menu {
-    width: 75vw;
     display: flex;
     #bar {
       visibility: hidden;
     }
     .n-menu {
       display: flex;
+      width: 70vw;
       justify-content: space-between;
       font-size: calc(0.9rem + 0.1vw);
       flex-grow: 1;
@@ -75,20 +71,37 @@
     width: 100vw;
     .row {
       justify-content: space-between;
+      .logo {
+        width: 10vw;
+        img {
+          width: 50px;
+          padding: 5px 0 0 5px;
+        }
+      }
       .menu {
         z-index: 1;
+
         display: flex;
         flex-direction: column;
         align-items: end;
-        width: 50vw !important;
-        background-color: #ffe3da;
+        height: 100vh;
         #bar {
           visibility: visible;
+          margin-top: 14px;
+          margin-right: 13px;
+          margin-bottom: 14px;
         }
         .n-menu {
+          width: 120px !important;
+          background-color: rgba(255, 227, 218, 1);
           display: flex;
           height: 35vh;
           flex-direction: column;
+          justify-content: flex-start;
+          .n-menu-item-content-header {
+            padding-top: 13px;
+            padding-bottom: 13px;
+          }
         }
       }
     }
@@ -101,6 +114,15 @@ import { CashOutline } from "@vicons/ionicons5";
 import { h, ref } from "vue";
 import { NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
+const active = ref(true);
+const activate = () => {
+  active.value = !active.value;
+};
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 767) {
+    active.value = true;
+  }
+});
 
 function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) });
@@ -201,24 +223,25 @@ const themeOverrides = {
   },
   Button: {
     colorPrimary: "#FD784EFF",
+
+    textColor: "#FD784EFF",
+    colorQuaternaryHover: "rgba(253, 120, 78, 0.1)",
+    colorQuaternaryPressed: "rgba(253, 120, 78, 0.08)",
+    colorQuaternary: "#fff",
   },
   CashOutline,
 };
 
-let count = 0;
-const btn = document.getElementById("bar");
-console.log(btn);
-if (btn) {
-  btn.addEventListener("click", () => {
-    count++;
-    if (count % 2 === 0) {
-      document.querySelector(".n-menu").style.display = "none";
-    } else {
-      document.querySelector(".n-menu").style.display = "inline-block";
-    }
-    console.log("btn clicked");
-  });
-}
+// let count = 0;
+// const changeTab = () => {
+//   count++;
+//   if (count % 2 === 0) {
+//     document.querySelector(".n-menu").style.display = "none";
+//   } else {
+//     document.querySelector(".n-menu").style.display = "inline-block";
+//   }
+//   console.log("btn clicked");
+// };
 
 // let bar = document
 //   .querySelector(".n-button")

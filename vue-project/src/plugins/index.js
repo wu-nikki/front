@@ -16,7 +16,7 @@ import VImageInput from "vue3-img-input";
 export async function registerPlugins(app) {
   loadFonts();
   app.use(pinia);
-  await useUserStore().getUser();
+  // await useUserStore().getUser();
   app.use(router);
 
   app.component("VImageInput", VImageInput);

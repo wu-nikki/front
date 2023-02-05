@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import FrontLayout from "@/layouts/FrontLayout.vue";
+import MemberLayout from "@/layouts/MemberLayout.vue";
+import MemberLogin from "@/views/front/member/loginView.vue";
 import FrontHomeView from "@/views/front/HomeView.vue";
 import NotFoundView from "@/views/NotFoundView.vue";
 import { useUserStore } from "@/stores/user";
@@ -17,16 +19,6 @@ const router = createRouter({
           component: FrontHomeView,
           meta: {
             title: "首頁",
-            login: false,
-            admin: false,
-          },
-        },
-        {
-          path: "memberLogin",
-          name: "memberLogin",
-          component: () => import("@/views/front/memberLoginView.vue"),
-          meta: {
-            title: "登入|註冊",
             login: false,
             admin: false,
           },
@@ -102,34 +94,50 @@ const router = createRouter({
           },
         },
         {
-          path: "memberLogin/:id",
-          name: "member",
-          component: () => import("@/views/front/member.vue"),
-          meta: {
-            title: "會員資料頁面",
-            login: true,
-            admin: false,
-          },
-        },
-        {
-          path: "memberLogin/:id/animals",
-          name: "memberAnimals",
-          component: () => import("@/views/front/memberAnimals.vue"),
-          meta: {
-            title: "會員毛孩收藏",
-            login: true,
-            admin: false,
-          },
-        },
-        {
-          path: "memberLogin/:id/reservel",
-          name: "memberReservel",
-          component: () => import("@/views/front/memberReservel.vue"),
-          meta: {
-            title: "會員預約",
-            login: true,
-            admin: false,
-          },
+          path: "member",
+          component: MemberLayout,
+          children: [
+            {
+              path: "",
+              name: "memberLogin",
+              component: MemberLogin,
+              meta: {
+                title: "登入|註冊",
+                login: false,
+                admin: false,
+              },
+            },
+            {
+              path: "me",
+              name: "member",
+              component: () => import("@/views/front/member/member.vue"),
+              meta: {
+                title: "會員資料頁面",
+                login: true,
+                admin: false,
+              },
+            },
+            {
+              path: "animals",
+              name: "memberAnimals",
+              component: () => import("@/views/front/member/animals.vue"),
+              meta: {
+                title: "會員毛孩收藏",
+                login: true,
+                admin: false,
+              },
+            },
+            {
+              path: "reservel",
+              name: "memberReservel",
+              component: () => import("@/views/front/member/reservel.vue"),
+              meta: {
+                title: "會員預約",
+                login: true,
+                admin: false,
+              },
+            },
+          ],
         },
       ],
     },
@@ -193,22 +201,22 @@ const router = createRouter({
 //   document.title = to.meta.title;
 // });
 // // 阻擋亂入
-// router.beforeEach(async (to, from, next) => {
-//   // console.log('beforeEach')
+router.beforeEach(async (to, from, next) => {
+  // console.log('beforeEach')
 
-//   const user = useUserStore();
-//   // 登入後，如果又點了註冊或是登入 把他導回首頁
-//   if (user.isLogin && (to.path === "/register" || to.path === "/login")) {
-//     next("/");
-//     // 如果去要登入的頁面 但他沒登入 ，把他導去登入頁
-//   } else if (to.meta.login && !user.isLogin) {
-//     next("/login");
-//     // 如果去要管理的頁面 ，要先判斷是不是管理員
-//   } else if (to.meta.admin && !user.isAdmin) {
-//     next("/");
-//   } else {
-//     next();
-//   }
-// });
+  const user = useUserStore();
+  // 登入後，如果又點了註冊或是登入 把他導回首頁
+  if (user.isLogin && (to.path === "/member" )) {
+    next("/member/me");
+    // 如果去要登入的頁面 但他沒登入 ，把他導去登入頁
+  } else if (to.meta.login && !user.isLogin) {
+    next("/member");
+    // 如果去要管理的頁面 ，要先判斷是不是管理員
+  } else if (to.meta.admin && !user.isAdmin) {
+    next("/");
+  } else {
+    next();
+  }
+});
 
 export default router;

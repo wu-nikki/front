@@ -5,7 +5,6 @@
         <div class="logo">
           <img src="../assets/Logo.png" alt="" />
         </div>
-
         <div class="menu">
           <n-button id="bar" quaternary circle @click="activate('right')">
             <template #icon>
@@ -32,6 +31,16 @@
 </template>
 
 <style lang="scss">
+html {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid rgb(255, 227, 218);
+  }
+}
 .nav {
   width: 90vw;
   height: 60px;
@@ -75,7 +84,7 @@
         width: 10vw;
         img {
           width: 50px;
-          padding: 5px 0 0 5px;
+          padding: 5px 0 0 50px;
         }
       }
       .menu {
@@ -111,9 +120,11 @@
 
 <script setup>
 import { CashOutline } from "@vicons/ionicons5";
-import { h, ref } from "vue";
-import { NIcon, useMessage } from "naive-ui";
+import { h, ref, computed } from "vue";
+import { useUserStore } from "@/stores/user";
+// import { NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
+const user = useUserStore();
 const active = ref(true);
 const activate = () => {
   active.value = !active.value;
@@ -124,79 +135,83 @@ window.addEventListener("resize", () => {
   }
 });
 
-function renderIcon(icon) {
-  return () => h(NIcon, null, { default: () => h(icon) });
-}
+// function renderIcon(icon) {
+//   return () => h(NIcon, null, { default: () => h(icon) });
+// }
 
-const menuOptions = [
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/",
-        },
-        { default: () => "首頁" }
-      ),
-    key: "home",
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/friendlyInformation",
-        },
-        { default: () => "友善資訊" }
-      ),
-    key: "FriendlyInformation",
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/aboutMe",
-        },
-        { default: () => "關於我們" }
-      ),
-    key: "AboutMeView",
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/animals",
-        },
-        { default: () => "認養毛孩" }
-      ),
-    key: "animalsView",
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/shelters",
-        },
-        { default: () => "收容所" }
-      ),
-    key: "sheltersView",
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: "/memberLogin",
-        },
-        { default: () => "登入 | 註冊" }
-      ),
-    key: "memberLoginView",
-  },
-];
-
+const menuOptions = computed(() => {
+  return [
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/",
+          },
+          { default: () => "首頁" }
+        ),
+      key: "home",
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/friendlyInformation",
+          },
+          { default: () => "友善資訊" }
+        ),
+      key: "FriendlyInformation",
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/aboutMe",
+          },
+          { default: () => "關於我們" }
+        ),
+      key: "AboutMeView",
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/animals",
+          },
+          { default: () => "認養毛孩" }
+        ),
+      key: "animalsView",
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/shelters",
+          },
+          { default: () => "收容所" }
+        ),
+      key: "sheltersView",
+    },
+    {
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/member",
+          },
+          {
+            default: () =>
+              user.token?.length > 0 ? "會員資料" : "登入 | 註冊",
+          }
+        ),
+      key: "memberLoginView",
+    },
+  ];
+});
 /**
  * js 文件下使用这个做类型提示
  * @type import('naive-ui').GlobalThemeOverrides
@@ -228,31 +243,12 @@ const themeOverrides = {
     colorQuaternaryHover: "rgba(253, 120, 78, 0.1)",
     colorQuaternaryPressed: "rgba(253, 120, 78, 0.08)",
     colorQuaternary: "#fff",
+  },Scrollbar: {
+    color: "rgba(253, 120, 78, 0.2)",
+    colorHover: "rgba(253, 120, 78, 0.6)"
   },
   CashOutline,
 };
-
-// let count = 0;
-// const changeTab = () => {
-//   count++;
-//   if (count % 2 === 0) {
-//     document.querySelector(".n-menu").style.display = "none";
-//   } else {
-//     document.querySelector(".n-menu").style.display = "inline-block";
-//   }
-//   console.log("btn clicked");
-// };
-
-// let bar = document
-//   .querySelector(".n-button")
-//   .addEventListener("click", function () {
-// count++;
-// if (count % 2 === 0) {
-//   document.querySelector(".n-menu").style.display = "none";
-// } else {
-//   document.querySelector(".n-menu").style.display = "inline-block";
-// }
-//   });
 </script>
 
 <script></script>

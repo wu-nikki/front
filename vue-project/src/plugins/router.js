@@ -132,7 +132,7 @@ const router = createRouter({
               name: "memberReservel",
               component: () => import("@/views/front/member/reservel.vue"),
               meta: {
-                title: "會員預約",
+                title: "預約清單",
                 login: true,
                 admin: false,
               },
@@ -205,7 +205,7 @@ router.beforeEach(async (to, from, next) => {
   // console.log('beforeEach')
 
   const user = useUserStore();
-  // 登入後，如果又點了註冊或是登入 把他導回首頁
+  // 登入後，如果又點了註冊或是登入 把他導到會員資料
   if (user.isLogin && (to.path === "/member" )) {
     next("/member/me");
     // 如果去要登入的頁面 但他沒登入 ，把他導去登入頁

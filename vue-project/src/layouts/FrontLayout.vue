@@ -88,8 +88,6 @@ html {
         }
       }
       .menu {
-        z-index: 1;
-
         display: flex;
         flex-direction: column;
         align-items: end;
@@ -101,6 +99,7 @@ html {
           margin-bottom: 14px;
         }
         .n-menu {
+          z-index: 2;
           width: 120px !important;
           background-color: rgba(255, 227, 218, 1);
           display: flex;
@@ -227,6 +226,7 @@ const themeOverrides = {
     itemTextColorActiveHoverHorizontal: "#FD784EFF",
     itemTextColorChildActiveHorizontal: "#FD784EFF",
     itemTextColorChildActiveHoverHorizontal: "#FD784EFF",
+    // itemTextColorHover: "rgb(54 242 74)",
   },
   Tabs: {
     tabTextColorActiveBar: "#FD784EFF",
@@ -243,9 +243,10 @@ const themeOverrides = {
     colorQuaternaryHover: "rgba(253, 120, 78, 0.1)",
     colorQuaternaryPressed: "rgba(253, 120, 78, 0.08)",
     colorQuaternary: "#fff",
-  },Scrollbar: {
+  },
+  Scrollbar: {
     color: "rgba(253, 120, 78, 0.2)",
-    colorHover: "rgba(253, 120, 78, 0.6)"
+    colorHover: "rgba(253, 120, 78, 0.6)",
   },
   CashOutline,
 };

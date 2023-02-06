@@ -124,7 +124,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import validator from "validator";
+import validator from 'validator';
 import { useUserStore } from "@/stores/user";
 import { api } from "@/plugins/axios";
 import Swal from "sweetalert2";
@@ -233,6 +233,7 @@ const login = async () => {
       title: "成功",
       text: "登入成功",
     });
+    
     router.push('/member/me')
   } catch (error) {
     Swal.fire({

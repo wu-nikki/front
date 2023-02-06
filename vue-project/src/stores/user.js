@@ -88,7 +88,6 @@ export const useUserStore = defineStore(
         const { data } = await apiAuth.get("/users/me");
         name.value = data.result.name;
         account.value = data.result.account;
-       
         list.value = data.result.list;
         dayList.value = data.result.dayList;
         role.value = data.result.role;

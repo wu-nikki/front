@@ -129,6 +129,7 @@
 }
 }
 @media (max-width: 768px) {
+  .member{
   .n-layout-sider {
     background-color: rgba(255, 227, 218, 0.5);
     padding-top: 0px;
@@ -194,9 +195,10 @@
     flex-direction: column !important;
     flex-wrap: nowrap;
   }
-}
+}}
 
 @media (max-width: 545px) {
+  .member{
   .n-layout-sider {
     .n-button {
       justify-content: center;
@@ -210,7 +212,7 @@
     }
 
   }
-}
+}}
 </style>
 
 <script setup>

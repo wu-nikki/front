@@ -144,75 +144,75 @@ const router = createRouter({
           ],
         },
 
-        // 後台管理
-        {
-          path: "admin",
-          component: AdminLayout,
-          children: [
-            {
-              path: "FriendlyInformation",
-              name: "admin-FriendlyInformation",
-              component: () => import("@/views/admin/FriendlyInformation.vue"),
-              meta: {
-                title: "頁面管理-友善資訊",
-                login: true,
-                admin: true,
-              },
-            },
-            {
-              path: "AboutMeView",
-              name: "admin-AboutMeView",
-              component: () => import("@/views/admin/AboutMeView.vue"),
-              meta: {
-                title: "頁面管理-關於我們",
-                login: true,
-                admin: true,
-              },
-            },
-            {
-              path: "Members",
-              name: "admin-Members",
-              component: () => import("@/views/admin/Members.vue"),
-              meta: {
-                title: "會員管理",
-                login: true,
-                admin: true,
-              },
-            },  {
-              path: "Reserve",
-              name: "admin-Reserve",
-              component: () => import("@/views/admin/Reserve.vue"),
-              meta: {
-                title: "預約管理",
-                login: true,
-                admin: true,
-              },
-            },
-            //     {
-            //       path: "products",
-            //       name: "admin-products",
-            //       component: () => import("@/views/admin/ProductsView.vue"),
-            //       meta: {
-            //         title: "購物網 | 商品管理",
-            //         login: true,
-            //         admin: true,
-            //       },
-            //     },
-            //     {
-            //       path: "orders",
-            //       name: "admin-orders",
-            //       component: () => import("@/views/admin/OrdersView.vue"),
-            //       meta: {
-            //         title: "購物網 | 訂單管理",
-            //         login: true,
-            //         admin: true,
-            //       },
-            //     },
-          ],
-        },
+        
       ],
     },
-
+// 後台管理
+{
+  path: "/admin",
+  component: AdminLayout,
+  children: [
+    {
+      path: "FriendlyInformation",
+      name: "admin-FriendlyInformation",
+      component: () => import("@/views/admin/FriendlyInformation.vue"),
+      meta: {
+        title: "頁面管理-友善資訊",
+        login: true,
+        admin: true,
+      },
+    },
+    {
+      path: "AboutMeView",
+      name: "admin-AboutMeView",
+      component: () => import("@/views/admin/AboutMeView.vue"),
+      meta: {
+        title: "頁面管理-關於我們",
+        login: true,
+        admin: true,
+      },
+    },
+    {
+      path: "Members",
+      name: "admin-Members",
+      component: () => import("@/views/admin/Members.vue"),
+      meta: {
+        title: "會員管理",
+        login: true,
+        admin: true,
+      },
+    },  {
+      path: "Reserve",
+      name: "admin-Reserve",
+      component: () => import("@/views/admin/Reserve.vue"),
+      meta: {
+        title: "預約管理",
+        login: true,
+        admin: true,
+      },
+    },
+    //     {
+    //       path: "products",
+    //       name: "admin-products",
+    //       component: () => import("@/views/admin/ProductsView.vue"),
+    //       meta: {
+    //         title: "購物網 | 商品管理",
+    //         login: true,
+    //         admin: true,
+    //       },
+    //     },
+    //     {
+    //       path: "orders",
+    //       name: "admin-orders",
+    //       component: () => import("@/views/admin/OrdersView.vue"),
+    //       meta: {
+    //         title: "購物網 | 訂單管理",
+    //         login: true,
+    //         admin: true,
+    //       },
+    //     },
+  ],
+},
     //
     {
       path: "/404",

@@ -2,26 +2,18 @@
   <!--  -->
   <div class="admin">
     <n-config-provider :theme-overrides="themeOverrides">
-      <n-layout>
-        <n-layout has-sider>
-          <div class="left">
-            <n-layout-sider bordered>
-              <n-space>
-                <n-avatar
-                  round
-                  :src="
-                    user.userImg
-                      ? user.userImg
-                      : `https://source.boringavatars.com/beam/512/${user.account}?colors=#FFF7C6,#FFC6A5,#E6324B,#093D64,#FEFF00`
-                  "
-                />
-              </n-space>
-              <n-h2>{{ user.name }}</n-h2>
+      <div class="nav">
+        <div class="title">後臺管理</div>
+      </div>
+      <!--  -->
+      <div class="admin-content">
+        <n-layout style="height: calc(100vh - 60px)">
+          <n-layout has-sider position="absolute">
+            <n-layout-sider bordered class="admin-left">
+              海淀桥
             </n-layout-sider>
-          </div>
 
-          <div class="right">
-            <n-layout>
+            <n-layout :native-scrollbar="false">
               <n-h2>平山道</n-h2>
               <n-h2>平山道</n-h2>
               <n-h2>平山道</n-h2>
@@ -34,11 +26,10 @@
               <n-h2>平山道</n-h2>
               <n-h2>平山道</n-h2>
               <n-h2>平山道</n-h2>
-              <router-view></router-view>
             </n-layout>
-          </div>
+          </n-layout>
         </n-layout>
-      </n-layout>
+      </div>
     </n-config-provider>
   </div>
 </template>
@@ -47,9 +38,29 @@
 * {
   --n-bezier: "";
 }
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.n-scrollbar-rail {
+  --n-scrollbar-color: rgb(255, 227, 218);
+  --n-scrollbar-color-hover: rgb(255, 149, 117);
+  --n-scrollbar-width: 6px;
+}
+
 .admin {
-  .n-config-provider {
-    height: calc(100vh - 60px);
+  width: 100vw;
+  height: 100vh;
+  .nav {
+    width: 100%;
+    background: #ffe3da;
+    .title {
+      margin-left: 20px;
+      font-size: calc(1.3rem + 0.5vw);
+    }
+  }
+  .admin-content {
   }
 }
 

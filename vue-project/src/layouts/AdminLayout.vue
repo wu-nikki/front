@@ -1,12 +1,58 @@
 <template>
   <!--  -->
   <div class="admin">
+    <n-config-provider :theme-overrides="themeOverrides">
+      <n-layout>
+        <n-layout has-sider>
+          <div class="left">
+            <n-layout-sider bordered>
+              <n-space>
+                <n-avatar
+                  round
+                  :src="
+                    user.userImg
+                      ? user.userImg
+                      : `https://source.boringavatars.com/beam/512/${user.account}?colors=#FFF7C6,#FFC6A5,#E6324B,#093D64,#FEFF00`
+                  "
+                />
+              </n-space>
+              <n-h2>{{ user.name }}</n-h2>
+            </n-layout-sider>
+          </div>
 
-
+          <div class="right">
+            <n-layout>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <n-h2>平山道</n-h2>
+              <router-view></router-view>
+            </n-layout>
+          </div>
+        </n-layout>
+      </n-layout>
+    </n-config-provider>
   </div>
 </template>
 
 <style lang="scss">
+* {
+  --n-bezier: "";
+}
+.admin {
+  .n-config-provider {
+    height: calc(100vh - 60px);
+  }
+}
+
 //  #ffe3da  rgba(255, 241, 236, 1)
 // .n-layout-sider:deep(.child-class) {
 //     background-color: #000

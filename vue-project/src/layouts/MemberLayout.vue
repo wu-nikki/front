@@ -43,6 +43,8 @@
 // .n-layout-sider:deep(.child-class) {
 //     background-color: #000
 // }
+.member{
+
 
 .n-layout-sider {
   background-color: #ffe3da;
@@ -125,7 +127,7 @@
     visibility: hidden;
   }
 }
-
+}
 @media (max-width: 768px) {
   .n-layout-sider {
     background-color: rgba(255, 227, 218, 0.5);

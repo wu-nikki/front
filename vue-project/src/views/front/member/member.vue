@@ -1,6 +1,6 @@
 <template>
-會員資料頁面  
-<n-carousel>
+
+
   <img
     class="carousel-img"
     src="https://picsum.photos/1920/1080/?random=10"
@@ -17,7 +17,8 @@
     class="carousel-img"
     src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
   />
-</n-carousel>
+
+會員資料頁面  
 </template>
 
 <style lang="scss">

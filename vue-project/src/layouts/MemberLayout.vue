@@ -51,15 +51,20 @@
   max-width: 25% !important;
   display: flex;
   justify-content: center;
+  transition: none;
   .n-avatar {
-    width: 12vw;
-    height: 12vw;
+    width: 11vw;
+    height: 11vw;
+    border: 0.4vw solid #fff;
   }
 
   .n-h2 {
     font-size: calc(22px + 0.3vw);
     // margin: 0 0 0 10px;
   }
+  .n-button {
+      display: none;
+    }
   .n-menu {
     display: flex;
     flex-direction: column;
@@ -281,8 +286,7 @@ const options = computed(() => {
 
 const themeOverrides = {
   Menu: {
-    borderRadius: "10px",
-    itemTextColorHover: "rgb(54 242 74)",
+    
     itemIconColor: "rgb(16, 28, 39)",
     itemIconColorHoverHorizontal: "rgb(58, 99, 138)",
     itemIconColorActiveHorizontal: "rgb(58, 99, 138)",

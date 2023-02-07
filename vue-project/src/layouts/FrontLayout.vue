@@ -23,6 +23,18 @@
             </template>
           </n-button>
           <n-menu v-if="active" mode="horizontal" :options="menuOptions" />
+
+          <n-button
+            class="btnLogin"
+            quaternary
+            circle
+            v-if="isLogin"
+            @click="logout"
+          >
+            <template #icon>
+              <n-icon><LogInOutline /></n-icon>
+            </template>
+          </n-button>
         </div>
       </div>
     </div>
@@ -31,6 +43,9 @@
 </template>
 
 <style lang="scss">
+* {
+  --n-bezier: "";
+}
 html {
   &::-webkit-scrollbar {
     width: 10px;
@@ -48,17 +63,20 @@ html {
   line-height: 60px;
   .row {
     display: flex;
+    height: 60px;
   }
   .logo {
+    display: flex;
     width: 15vw;
-    height: 60px;
+    align-items: center;
     img {
-      width: 60px;
+      width: 50px;
     }
   }
 
   .menu {
     display: flex;
+    align-items: flex-end;
     #bar {
       visibility: hidden;
     }
@@ -66,18 +84,47 @@ html {
       display: flex;
       width: 70vw;
       justify-content: space-between;
-      font-size: calc(0.9rem + 0.1vw);
+      font-size: calc(0.6rem + 0.4vw);
       flex-grow: 1;
       font-weight: bolder;
+      transition: none !important;
+    }
+
+    .n-menu-item {
+      --n-item-text-color: #fd784eff;
+      width: 100%;
+      text-align: center;
+    }
+    .n-menu-item-content {
+      padding: 0;
+      border-bottom: 0px;
+      height: 85%;
+    }
+    .n-menu-item-content-header a {
+      padding: calc(0.2rem + 1.3vw);
     }
     .n-menu--horizontal {
-      align-items: flex-end;
+      display: flex;
     }
+    .n-button {
+      margin-left: calc(0.4vw + 10px);
+      width: 2.5rem;
+      height: 2.5rem;
+      // display: inline-flex;
+      // align-items: flex-start;
+      margin-bottom: 7px;
+      .n-button__icon {
+        font-size: 1.8rem;
+      }
+    }
+
+    // n-button n-button--default-type n-button--medium-type btnLogin
   }
 }
+
 @media (max-width: 768px) {
   .nav {
-    width: 100vw;
+    width: 100vw !important;
     .row {
       justify-content: space-between;
       .logo {
@@ -92,12 +139,25 @@ html {
         flex-direction: column;
         align-items: end;
         height: 100vh;
+
         #bar {
+          width: 3rem;
+          height: 3rem;
           visibility: visible;
-          margin-top: 14px;
-          margin-right: 13px;
-          margin-bottom: 14px;
+          margin: 6px 13px 6px 0;
+          background: #fff;
+          .n-button__icon {
+            font-size: 1.5rem;
+          }
         }
+        #bar:hover {
+          background: rgba(253, 120, 78, 0.1);
+        }
+        // #bar:active,
+        // #bar:visited {
+        //   background: #fff;
+        // }
+
         .n-menu {
           z-index: 2;
           width: 120px !important;
@@ -106,20 +166,41 @@ html {
           height: 35vh;
           flex-direction: column;
           justify-content: flex-start;
-          .n-menu-item-content-header {
-            padding-top: 13px;
-            padding-bottom: 13px;
+          align-items: center;
+          font-size: calc(0.4rem + 1.1vw);
+
+          .n-menu-item {
+            width: 100%;
+            text-align: center;
+          }
+        }
+        .btnLogin {
+          z-index: 3;
+          // color: rgb(16, 28, 39);
+          background: rgba(255, 227, 218, 0.2);
+          &:hover {
+            background: #fff;
           }
         }
       }
     }
   }
 }
+
+// @media (max-width: 545px) {
+//   .menu {
+//     .n-menu {
+//       font-size: calc(2rem + 0.8vw );
+//     }
+//   }
+// }
 </style>
 
 <script setup>
-import { CashOutline } from "@vicons/ionicons5";
+import { LogInOutline } from "@vicons/ionicons5";
 import { h, ref, computed } from "vue";
+import { storeToRefs } from "pinia";
+
 import { useUserStore } from "@/stores/user";
 // import { NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
@@ -133,10 +214,8 @@ window.addEventListener("resize", () => {
     active.value = true;
   }
 });
-
-// function renderIcon(icon) {
-//   return () => h(NIcon, null, { default: () => h(icon) });
-// }
+const { isLogin } = storeToRefs(user);
+const { logout } = user;
 
 const menuOptions = computed(() => {
   return [
@@ -195,6 +274,7 @@ const menuOptions = computed(() => {
         ),
       key: "sheltersView",
     },
+    
     {
       label: () =>
         h(
@@ -208,6 +288,19 @@ const menuOptions = computed(() => {
           }
         ),
       key: "memberLoginView",
+    },{
+      label: () =>
+        h(
+          RouterLink,
+          {
+            to: "/admin",
+          },
+          {
+            default: () => "管理設定",
+          }
+        ),
+      key: "AdminLayout",
+      show: user.role == "1",
     },
   ];
 });
@@ -248,7 +341,6 @@ const themeOverrides = {
     color: "rgba(253, 120, 78, 0.2)",
     colorHover: "rgba(253, 120, 78, 0.6)",
   },
-  CashOutline,
 };
 </script>
 

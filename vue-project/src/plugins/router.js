@@ -1,8 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import FrontLayout from "@/layouts/FrontLayout.vue";
+import FrontHomeView from "@/views/front/HomeView.vue";
+
 import MemberLayout from "@/layouts/MemberLayout.vue";
 import MemberLogin from "@/views/front/member/loginView.vue";
-import FrontHomeView from "@/views/front/HomeView.vue";
+
+import AdminLayout from "@/layouts/AdminLayout.vue";
+
 import NotFoundView from "@/views/NotFoundView.vue";
 import { useUserStore } from "@/stores/user";
 
@@ -139,45 +143,76 @@ const router = createRouter({
             },
           ],
         },
+
+        // 後台管理
+        {
+          path: "admin",
+          component: AdminLayout,
+          children: [
+            {
+              path: "FriendlyInformation",
+              name: "admin-FriendlyInformation",
+              component: () => import("@/views/admin/FriendlyInformation.vue"),
+              meta: {
+                title: "頁面管理-友善資訊",
+                login: true,
+                admin: true,
+              },
+            },
+            {
+              path: "AboutMeView",
+              name: "admin-AboutMeView",
+              component: () => import("@/views/admin/AboutMeView.vue"),
+              meta: {
+                title: "頁面管理-關於我們",
+                login: true,
+                admin: true,
+              },
+            },
+            {
+              path: "Members",
+              name: "admin-Members",
+              component: () => import("@/views/admin/Members.vue"),
+              meta: {
+                title: "會員管理",
+                login: true,
+                admin: true,
+              },
+            },  {
+              path: "Reserve",
+              name: "admin-Reserve",
+              component: () => import("@/views/admin/Reserve.vue"),
+              meta: {
+                title: "預約管理",
+                login: true,
+                admin: true,
+              },
+            },
+            //     {
+            //       path: "products",
+            //       name: "admin-products",
+            //       component: () => import("@/views/admin/ProductsView.vue"),
+            //       meta: {
+            //         title: "購物網 | 商品管理",
+            //         login: true,
+            //         admin: true,
+            //       },
+            //     },
+            //     {
+            //       path: "orders",
+            //       name: "admin-orders",
+            //       component: () => import("@/views/admin/OrdersView.vue"),
+            //       meta: {
+            //         title: "購物網 | 訂單管理",
+            //         login: true,
+            //         admin: true,
+            //       },
+            //     },
+          ],
+        },
       ],
     },
-    // 後台管理
-    // {
-    //   path: "/admin",
-    //   component: () => import("@/layouts/AdminLayout.vue"),
-    //   children: [
-    //     {
-    //       path: "",
-    //       name: "admin-home",
-    //       component: () => import("@/views/admin/HomeView.vue"),
-    //       meta: {
-    //         title: "購物網 | 管理",
-    //         login: true,
-    //         admin: true,
-    //       },
-    //     },
-    //     {
-    //       path: "products",
-    //       name: "admin-products",
-    //       component: () => import("@/views/admin/ProductsView.vue"),
-    //       meta: {
-    //         title: "購物網 | 商品管理",
-    //         login: true,
-    //         admin: true,
-    //       },
-    //     },
-    //     {
-    //       path: "orders",
-    //       name: "admin-orders",
-    //       component: () => import("@/views/admin/OrdersView.vue"),
-    //       meta: {
-    //         title: "購物網 | 訂單管理",
-    //         login: true,
-    //         admin: true,
-    //       },
-    //     },
-    //   ],
-    // },
+
     //
     {
       path: "/404",
@@ -206,7 +241,7 @@ router.beforeEach(async (to, from, next) => {
 
   const user = useUserStore();
   // 登入後，如果又點了註冊或是登入 把他導到會員資料
-  if (user.isLogin && (to.path === "/member" )) {
+  if (user.isLogin && to.path === "/member") {
     next("/member/me");
     // 如果去要登入的頁面 但他沒登入 ，把他導去登入頁
   } else if (to.meta.login && !user.isLogin) {

@@ -163,11 +163,21 @@ const router = createRouter({
       },
     },
     {
-      path: "AboutMeView",
-      name: "admin-AboutMeView",
+      path: "AboutMe",
+      name: "admin-AboutMe",
       component: () => import("@/views/admin/AboutMeView.vue"),
       meta: {
         title: "頁面管理-關於我們",
+        login: true,
+        admin: true,
+      },
+    },
+    {
+      path: "Carousel",
+      name: "admin-Carousel",
+      component: () => import("@/views/admin/CarouselView.vue"),
+      meta: {
+        title: "頁面管理-首頁輪播設定",
         login: true,
         admin: true,
       },
@@ -186,7 +196,7 @@ const router = createRouter({
       name: "admin-Reserve",
       component: () => import("@/views/admin/Reserve.vue"),
       meta: {
-        title: "預約管理",
+        title: "預約管理-預約清單",
         login: true,
         admin: true,
       },

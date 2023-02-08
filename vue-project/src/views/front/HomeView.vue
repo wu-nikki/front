@@ -22,10 +22,16 @@
   <!-- v-col(v-for="product in products" :key="product._id" cols="12" md="6" lg="3") -->
   <div id="animal-card">
     <div class="row">
-      
+      <n-divider>Screen 响应式</n-divider>
+  <n-grid cols="2 s:3 m:4 l:5 xl:6 2xl:7" responsive="screen">
+    <n-gi v-for="animal in animals" :key="animal._id">
+      <router-link v-bind="animal">{{AnimalCard}}</router-link> 
+    </n-gi>
+    
+  </n-grid>
     </div>
   </div>
-  <!-- ProductCard(v-bind="product") -->
+  <!-- ProductCard(v-bind="animal") -->
 
 
 </template>
@@ -39,22 +45,25 @@
 </style>
 
 <script setup>
-// import { reactive } from 'vue'
-// import { api } from '@/plugins/axios'
-// import Swal from 'sweetalert2'
-// import ProductCard from '@/components/ProductCard'
-// const products = reactive([]);
-// (async () => {
-//   try {
-//     const { data } = await api.get('/products')
-//     products.push(...data.result)
-//   } catch (error) {
-//     Swal.fire({
-//       icon: 'error',
-//       title: '失敗',
-//       text: error?.response?.data?.message || '發生錯誤'
-//     })
-//   }
-// })()
+import { reactive } from 'vue'
+import { api } from '@/plugins/axios'
+import Swal from 'sweetalert2'
+import AnimalCard from '../../components/AnimalCard.vue'
+const animals = reactive([]);
+
+(async () => {
+  try {
+    const { data } = await api.get('/animals')
+    // console.log(data)
+
+    // animals.push(...data.result)
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: '失敗',
+      text: error?.response?.data?.message || '發生錯誤'
+    })
+  }
+})()
 
 </script>

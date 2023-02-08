@@ -1,29 +1,5 @@
-
-  <template>
-  <n-card title="带封面的卡片">
-    <template #header-extra> #header-extra </template>
-    <template #cover>
-      <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" />
-    </template>
-    卡片内容
-
-    <template #footer> #footer </template>
-    
-  </n-card>
-</template>
-  <!-- <n-h2>{{ user.name }}</n-h2> -->
-
-
-<style lang="scss">
-.n-card {
-  max-width: 300px;
-}
-</style>
-
-<script setup>
-import { useUserStore } from "@/stores/user";
-const user = useUserStore();
-
+<template>
+  <!-- 
 // {
 //   "_id": {
 //     "$oid": "63d9172425a8467587909e3f"
@@ -43,38 +19,78 @@ const user = useUserStore();
 //     "$oid": "63d9170ba38a09fc8c1ad9be"
 //   },
 //   "remark": "---"
-// }
+// } -->
+  <n-card>
+    <template #header-extra
+      ><n-button
+        class="btnLogin"
+        quaternary
+        circle
+        v-if="isLogin"
+        @click="logout"
+      >
+        <template #icon>
+          <n-icon><LogInOutline /></n-icon>
+        </template>
+      </n-button>
+    </template>
+    <template #cover>
+      <img :src="img" />
+    </template>
+    <n-h2> <router-link :to="'/animals/' + _id" />{{ size }} </n-h2>
 
+    <template #footer> #footer </template>
+  </n-card>
+</template>
+<!-- <n-h2>{{ user.name }}</n-h2> -->
+
+<style lang="scss">
+.n-card {
+  max-width: 300px;
+}
+</style>
+
+<script setup>
+import { LogInOutline } from "@vicons/ionicons5";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
+const user = useUserStore();
+const { isLogin } = storeToRefs(user);
+const { logout } = user;
+console.log(user) 
 defineProps({
-  /* eslint-disable */
-  _id: {
+  img: {
     type: String,
-    default: "",
+    required: true,
   },
-  /* eslint-enable */
-  name: {
+  // 體型
+  size: {
     type: String,
-    default: "",
+    required: true,
   },
-  price: {
-    type: Number,
-    default: 0,
-  },
-  description: {
+  // 毛色
+  color: {
     type: String,
-    default: "",
+    required: true,
   },
-  image: {
+  // 動物品種
+  variety: {
     type: String,
-    default: "",
+    required: true,
   },
-  sell: {
-    type: Boolean,
-    default: false,
-  },
-  category: {
+  // 動物性別
+  gender: {
     type: String,
-    default: "",
+    required: true,
+  }, // 動物類別
+  kind: {
+    type: String,
+    required: true,
+  },
+  // 公告收容所
+  shelterName: {
+    type: String,
+    required: true,
   },
 });
 </script>

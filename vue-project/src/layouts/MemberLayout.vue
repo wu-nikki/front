@@ -215,7 +215,7 @@
 }}
 </style>
 
-<script setup>
+<script  setup> 
 import {
   PersonCircleOutline,
   HeartSharp,

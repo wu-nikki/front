@@ -197,6 +197,7 @@ html {
 </style>
 
 <script setup>
+
 import { LogInOutline } from "@vicons/ionicons5";
 import { h, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
@@ -205,6 +206,7 @@ import { useUserStore } from "@/stores/user";
 // import { NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
 const user = useUserStore();
+
 const active = ref(true);
 const activate = () => {
   active.value = !active.value;

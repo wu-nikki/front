@@ -239,7 +239,7 @@ import { RouterLink } from "vue-router";
 const user = useUserStore();
 const menuColor = ref(true);
 const active = ref(true);
-console.log(menuColor);
+// console.log(menuColor);
 const activate = () => {
   active.value = !active.value;
   menuColor.value = !menuColor.value;

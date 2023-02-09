@@ -1,48 +1,44 @@
 <template>
-  <!-- {
+
+<!-- {
   "_id": {
-    "$oid": "63e44cd94c1fe16e40929875"
+    "$oid": "63e4a7c0fe0ff99c31c4fd15"
   },
-  "img": "https://www.pet.gov.tw/upload/pic/1675851170399.png",
-  "size": "中型",
-  "color": "黃虎斑色",
+  "img": "https://www.pet.gov.tw/upload/pic/1672990486661.png",
+  "size": "小型",
+  "color": "棕色",
   "variety": "米克斯",
   "gender": "母",
-  "kind": "貓",
-  "opendate": "2023-02-15",
+  "kind": "犬",
+  "opendate": "2023-02-20",
   "sterilization": "已絕育",
   "age": "成年",
-  "subid": "112020701",
+  "subid": "OAAAG1120106005",
   "status": "開放認養",
   "shelterName": {
-    "$oid": "63d9170ba38a09fc8c1ad9be"
+    "$oid": "63e4a7a2825a7b0e31492c8d"
   },
-  "remark": "右剪耳，112215 開放認養"
+  "remark": "---"
 } -->
+
   <n-card>
-    <template #header-extra
-      >
-      <!-- <n-button class="btnLogin" quaternary circle> -->
-        <!-- v-if="isLogin" -->
-        <!-- @click="logout" -->
-        <!-- <template #icon>
+    <template #header-extra>
+      <!-- <n-button  quaternary circle>
+        <template #icon>
           <n-icon><LogInOutline /></n-icon>
         </template>
       </n-button> -->
-
     </template>
+    <router-link :to="'/animals/' + _id" />
+  
 
-<template #title>
-  size
-</template>
-    
     <template #cover>
-      <img src="https://www.pet.gov.tw/upload/pic/1675851170399.png">
+      <img :src="img" />
       <!-- <img :src="img" /> -->
     </template>
-    <!-- <n-h2> <router-link :to="'/animals/' + _id" />{{ size }} </n-h2> -->
 
-    <template #footer> #footer </template>
+    <template #footer> {{ size }} {{shelterName.place }}</template>
+    
   </n-card>
 </template>
 <!-- <n-h2>{{ user.name }}</n-h2> -->
@@ -63,9 +59,9 @@ const user = useUserStore();
 
 defineProps({
   _id: {
-      type: String,
-      default: ''
-    },
+    type: String,
+    required: [true, "https://i.imgur.com/yfhkJ0F.jpg"],
+  },
   img: {
     type: String,
     required: true,

@@ -1,43 +1,46 @@
 <template>
-  <!-- 
-// {
-//   "_id": {
-//     "$oid": "63d9172425a8467587909e3f"
-//   },
-//   "img": "https://www.pet.gov.tw/upload/pic/1675160685885.png",
-//   "size": "中型",
-//   "color": "黑黃色",
-//   "variety": "米克斯",
-//   "gender": "母",
-//   "kind": "貓",
-//   "opendate": "2023-01-18",
-//   "sterilization": "已絕育",
-//   "age": "成年",
-//   "subid": "111112602",
-//   "status": "開放認養",
-//   "shelterName": {
-//     "$oid": "63d9170ba38a09fc8c1ad9be"
-//   },
-//   "remark": "---"
-// } -->
+  <!-- {
+  "_id": {
+    "$oid": "63e44cd94c1fe16e40929875"
+  },
+  "img": "https://www.pet.gov.tw/upload/pic/1675851170399.png",
+  "size": "中型",
+  "color": "黃虎斑色",
+  "variety": "米克斯",
+  "gender": "母",
+  "kind": "貓",
+  "opendate": "2023-02-15",
+  "sterilization": "已絕育",
+  "age": "成年",
+  "subid": "112020701",
+  "status": "開放認養",
+  "shelterName": {
+    "$oid": "63d9170ba38a09fc8c1ad9be"
+  },
+  "remark": "右剪耳，112215 開放認養"
+} -->
   <n-card>
     <template #header-extra
-      ><n-button
-        class="btnLogin"
-        quaternary
-        circle
-        v-if="isLogin"
-        @click="logout"
       >
-        <template #icon>
+      <!-- <n-button class="btnLogin" quaternary circle> -->
+        <!-- v-if="isLogin" -->
+        <!-- @click="logout" -->
+        <!-- <template #icon>
           <n-icon><LogInOutline /></n-icon>
         </template>
-      </n-button>
+      </n-button> -->
+
     </template>
+
+<template #title>
+  size
+</template>
+    
     <template #cover>
-      <img :src="img" />
+      <img src="https://www.pet.gov.tw/upload/pic/1675851170399.png">
+      <!-- <img :src="img" /> -->
     </template>
-    <n-h2> <router-link :to="'/animals/' + _id" />{{ size }} </n-h2>
+    <!-- <n-h2> <router-link :to="'/animals/' + _id" />{{ size }} </n-h2> -->
 
     <template #footer> #footer </template>
   </n-card>
@@ -55,10 +58,14 @@ import { LogInOutline } from "@vicons/ionicons5";
 import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 const user = useUserStore();
-const { isLogin } = storeToRefs(user);
-const { logout } = user;
-console.log(user) 
+// const { isLogin } = storeToRefs(user);
+// const { logout } = user;
+
 defineProps({
+  _id: {
+      type: String,
+      default: ''
+    },
   img: {
     type: String,
     required: true,

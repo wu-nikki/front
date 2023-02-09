@@ -3,10 +3,9 @@
   <div class="admin">
     <n-config-provider :theme-overrides="themeOverrides">
       <div class="nav">
-       
         <!--  class="btnLogin"  v-if="isLogin"
           @click="logout" -->
-        <n-button class="btn" quaternary circle  @click="home">
+        <n-button class="btn" quaternary circle @click="home">
           <template #icon>
             <n-icon><LogInOutline /></n-icon>
           </template>
@@ -61,7 +60,7 @@
 }
 body {
   margin: 0;
-  overflow: hidden;
+
 }
 
 .n-scrollbar-rail {
@@ -283,7 +282,7 @@ import { RouterLink } from "vue-router";
 const user = useUserStore();
 const router = useRouter();
 
-const home = ()=>router.push('/');
+const home = () => router.push("/");
 const btnActive = ref(true);
 
 const options = computed(() => {
@@ -425,8 +424,6 @@ const themeOverrides = {
     itemColorVisited: "rgb(255, 255, 255)",
   },
   Button: {
-
-
     textColor: "#FD784EFF",
     colorQuaternaryHover: "rgba(255, 255, 255, 0.8)",
     colorQuaternaryPressed: "rgba(255, 255, 255, 0.8)",

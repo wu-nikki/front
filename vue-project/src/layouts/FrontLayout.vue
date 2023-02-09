@@ -23,18 +23,28 @@
             </template>
           </n-button>
           <n-menu v-if="active" mode="horizontal" :options="menuOptions" />
-
-          <n-button
-            class="btnLogin"
-            quaternary
-            circle
-            v-if="isLogin"
-            @click="logout"
+          <div
+            class="btn-bg"
+            v-if="menuColor"
+            :style="
+              menuColor == 'true'
+                ? 'background:transparent'
+                : 'background:white'
+            "
           >
-            <template #icon>
-              <n-icon><LogInOutline /></n-icon>
-            </template>
-          </n-button>
+            <n-button
+              class="btnLogin"
+              quaternary
+              circle
+              v-if="isLogin"
+              @click="logout"
+            >
+              <template #icon>
+                <n-icon><LogInOutline /></n-icon>
+              </template>
+              登出
+            </n-button>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +56,8 @@
 * {
   --n-bezier: "";
 }
-html {
+html,
+.main {
   &::-webkit-scrollbar {
     width: 10px;
   }
@@ -57,13 +68,18 @@ html {
   }
 }
 .nav {
-  width: 90vw;
+  position: fixed;
+  z-index: 1;
+  background: #fff;
+  width: 100vw;
   height: 60px;
   margin: auto;
   line-height: 60px;
   .row {
+    width: 90vw;
     display: flex;
     height: 60px;
+    margin: auto;
   }
   .logo {
     display: flex;
@@ -77,6 +93,7 @@ html {
   .menu {
     display: flex;
     align-items: flex-end;
+    background: transparent;
     #bar {
       visibility: hidden;
     }
@@ -106,13 +123,18 @@ html {
     .n-menu--horizontal {
       display: flex;
     }
+    .btn-bg {
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     .n-button {
-      margin-left: calc(0.4vw + 10px);
-      width: 2.5rem;
-      height: 2.5rem;
-      // display: inline-flex;
-      // align-items: flex-start;
-      margin-bottom: 7px;
+      margin-left: calc(0.1vw + 5px);
+      width: 4rem;
+      height: 3rem;
+      font-weight: bolder !important;
+    
       .n-button__icon {
         font-size: 1.8rem;
       }
@@ -126,12 +148,14 @@ html {
   .nav {
     width: 100vw !important;
     .row {
+      width: 100%;
       justify-content: space-between;
       .logo {
         width: 10vw;
+        align-items: flex-start;
         img {
           width: 50px;
-          padding: 5px 0 0 50px;
+          padding: 5px 0 0 38px;
         }
       }
       .menu {
@@ -174,8 +198,16 @@ html {
             text-align: center;
           }
         }
+        .btn-bg {
+          width: 120px;
+          height: 48px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
         .btnLogin {
           z-index: 3;
+          margin: 6px 13px 6px 0;
           // color: rgb(16, 28, 39);
           background: rgba(255, 227, 218, 0.2);
           &:hover {
@@ -197,7 +229,6 @@ html {
 </style>
 
 <script setup>
-
 import { LogInOutline } from "@vicons/ionicons5";
 import { h, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
@@ -206,14 +237,16 @@ import { useUserStore } from "@/stores/user";
 // import { NIcon, useMessage } from "naive-ui";
 import { RouterLink } from "vue-router";
 const user = useUserStore();
-
+const menuColor = ref(true);
 const active = ref(true);
+console.log(menuColor);
 const activate = () => {
   active.value = !active.value;
+  menuColor.value = !menuColor.value;
 };
 window.addEventListener("resize", () => {
   if (window.innerWidth > 767) {
-    active.value = true;
+    active.value = true;  menuColor.value = true;
   }
 });
 const { isLogin } = storeToRefs(user);
@@ -276,7 +309,7 @@ const menuOptions = computed(() => {
         ),
       key: "sheltersView",
     },
-    
+
     {
       label: () =>
         h(
@@ -290,7 +323,8 @@ const menuOptions = computed(() => {
           }
         ),
       key: "memberLoginView",
-    },{
+    },
+    {
       label: () =>
         h(
           RouterLink,

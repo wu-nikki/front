@@ -12,14 +12,14 @@
 
   <!-- v-col(v-for="product in products" :key="product._id" cols="12" md="6" lg="3") -->
   <div id="animal-card">
-    <n-divider>Screen 响应式</n-divider>
+    
     <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->
       <n-gi v-for="animal in animals" :key="animal._id">
         <AnimalCard v-bind="animal"></AnimalCard>
       </n-gi>
     </n-grid>
-    <n-divider>Screen 响应式</n-divider>
+    
   </div>
   <!-- ProductCard(v-bind="animal") -->
 </template>
@@ -31,8 +31,16 @@
   object-fit: cover;
 }
 #animal-card {
+  padding-top: 80px;
   margin: auto;
   width: 80%;
+  display: grid;
+  justify-content: center;
+  .n-grid {
+  grid-column-gap: 2vw !important;
+  grid-row-gap: 3vh !important;
+
+  }
 }
 </style>
 

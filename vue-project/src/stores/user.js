@@ -18,6 +18,9 @@ export const useUserStore = defineStore(
       return token.value.length > 0;
     });
 
+    const isAdmin = computed(() => {
+      return role.value === 1;
+    });
 
     // 可愛頭貼
     // https://source.boringavatars.com/marble/120/Maria%20Mitchell?colors=264653,2a9d8f,e9c46a,f4a261,e76f51
@@ -36,7 +39,7 @@ export const useUserStore = defineStore(
         // console.log(account.value);
         account.value = data.result.account;
         // console.log(account.value);
-        
+
         list.value = data.result.list;
         dayList.value = data.result.dayList;
         role.value = data.result.role;
@@ -150,16 +153,16 @@ export const useUserStore = defineStore(
       list,
       dayList,
       role,
+      isAdmin,
       login,
       logout,
       getUser,
       isLogin,
-   
     };
   },
   {
     persist: {
-      key: "user"
+      key: "user",
     },
   }
 );

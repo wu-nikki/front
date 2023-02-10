@@ -119,6 +119,16 @@
 
     width: calc(350px + 9vw);
   }
+  .n-button{
+    --n-color: rgb(255, 210, 210) !important;
+    --n-color-hover: rgba(253,  190, 190, 1) !important;
+    --n-color-pressed:rgba(255, 160, 160, 1) !important;
+    --n-color-hover: rgba(255, 190, 190, 1) !important;
+    --n-color-focus: rgba(253,  190, 190, 1) !important;
+    // rgb(253 120 78)
+
+
+  }
 }
 </style>
 

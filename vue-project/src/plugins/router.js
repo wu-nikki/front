@@ -173,7 +173,7 @@ const router = createRouter({
       },
     },
     {
-      path: "Carousel",
+      path: "carousel",
       name: "admin-Carousel",
       component: () => import("@/views/admin/CarouselView.vue"),
       meta: {
@@ -248,8 +248,8 @@ const router = createRouter({
 // // 阻擋亂入
 router.beforeEach(async (to, from, next) => {
   // console.log('beforeEach')
-
   const user = useUserStore();
+
   // 登入後，如果又點了註冊或是登入 把他導到會員資料
   if (user.isLogin && to.path === "/member") {
     next("/member/me");

@@ -5,7 +5,7 @@
       <div class="nav">
         <!--  class="btnLogin"  v-if="isLogin"
           @click="logout" -->
-        <n-button class="btn" quaternary circle @click="home">
+        <n-button class="btn" quaternary circle @click=" home ">
           <template #icon>
             <n-icon><LogInOutline /></n-icon>
           </template>
@@ -277,7 +277,7 @@ body {
 <script setup>
 import { LogInOutline } from "@vicons/ionicons5";
 import { NIcon } from "naive-ui";
-// import { ref, reactive } from "vue";
+import { ref, computed } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import { RouterLink } from "vue-router";
@@ -305,7 +305,7 @@ const options = computed(() => {
                 h(
                   RouterLink,
                   {
-                    to: "/admin/Carousel",
+                    to: "/admin/carousel",
                   },
                   { default: () => "首頁輪播" }
                 ),

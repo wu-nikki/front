@@ -67,9 +67,13 @@ html,
     border: 1px solid rgb(255, 227, 218);
   }
 }
+.main {
+  // 因為導覽列設fixed
+  padding-top: 60px;
+}
 .nav {
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   background: #fff;
   width: 100vw;
   height: 60px;
@@ -124,7 +128,6 @@ html,
       display: flex;
     }
     .btn-bg {
-
       display: flex;
       justify-content: center;
       align-items: center;
@@ -134,7 +137,7 @@ html,
       width: 4rem;
       height: 3rem;
       font-weight: bolder !important;
-    
+
       .n-button__icon {
         font-size: 1.8rem;
       }
@@ -246,7 +249,8 @@ const activate = () => {
 };
 window.addEventListener("resize", () => {
   if (window.innerWidth > 767) {
-    active.value = true;  menuColor.value = true;
+    active.value = true;
+    menuColor.value = true;
   }
 });
 const { isLogin } = storeToRefs(user);
@@ -376,6 +380,11 @@ const themeOverrides = {
   Scrollbar: {
     color: "rgba(253, 120, 78, 0.2)",
     colorHover: "rgba(253, 120, 78, 0.6)",
+  },
+  Card: {
+    borderRadius: "10px",
+    actionColor:
+    "rgba(255, 255, 255, 1)",
   },
 };
 </script>

@@ -43,12 +43,15 @@
 // .n-layout-sider:deep(.child-class) {
 //     background-color: #000
 // }
+
 .member{
-
-
+  
+// .n-layout-scroll-container{
+//   padding-top:60px ;
+// }
 .n-layout-sider {
   background-color: #ffe3da;
-  padding-top: 50px;
+  // padding-top: 60px;
   text-align: center;
   max-width: 25% !important;
   display: flex;

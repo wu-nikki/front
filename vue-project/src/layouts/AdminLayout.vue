@@ -93,6 +93,8 @@ body {
     }
   }
   .admin-content {
+    // 因為導覽列設fixed
+    padding-top: 60px;
     .n-layout-sider {
       text-align: center;
       max-width: 25% !important;

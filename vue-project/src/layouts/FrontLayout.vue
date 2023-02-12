@@ -194,7 +194,7 @@ html,
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          font-size: calc(0.4rem + 1.1vw);
+          font-size: calc(0.55rem + 1.1vw);
 
           .n-menu-item {
             width: 100%;

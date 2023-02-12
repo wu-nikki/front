@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
     const token = ref("");
     const name = ref("");
     const account = ref("");
-    const list = ref(0);
+    const likeAnimalsList = ref(0);
     const dayList = ref(0);
     const role = ref(0);
 
@@ -40,7 +40,7 @@ export const useUserStore = defineStore(
         account.value = data.result.account;
         // console.log(account.value);
 
-        list.value = data.result.list;
+        likeAnimalsList.value = data.result.likeAnimalsList;
         dayList.value = data.result.dayList;
         role.value = data.result.role;
 
@@ -66,7 +66,7 @@ export const useUserStore = defineStore(
         token.value = "";
         name.value = "";
         account.value = "";
-        list.value = 0;
+        likeAnimalsList.value = 0;
         role.value = 0;
         dayList.value = 0;
         router.push("/");
@@ -89,7 +89,7 @@ export const useUserStore = defineStore(
         const { data } = await apiAuth.get("/users/me");
         name.value = data.result.name;
         account.value = data.result.account;
-        list.value = data.result.list;
+        likeAnimalsList.value = data.result.likeAnimalsList;
         dayList.value = data.result.dayList;
         role.value = data.result.role;
       } catch (error) {
@@ -97,36 +97,68 @@ export const useUserStore = defineStore(
       }
     };
 
-    // 購物車
-    // const editCart = async ({ _id, quantity }) => {
-    //   if (token.value.length === 0) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "失敗",
-    //       text: "請先登入",
-    //     });
-    //     router.push("/login");
-    //     return;
-    //   }
-    //   try {
-    //     const { data } = await apiAuth.post("/users/cart", {
-    //       p_id: _id,
-    //       quantity,
-    //     });
-    //     cart.value = data.result;
-    //     Swal.fire({
-    //       icon: "success",
-    //       title: "成功",
-    //       text: "加入購物車成功",
-    //     });
-    //   } catch (error) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: "失敗",
-    //       text: error?.response?.data?.message || "發生錯誤",
-    //     });
-    //   }
-    // };
+    //加入至毛孩收藏 
+    const addLikeAnimalsList = async ({ _id }) => {
+      if (token.value.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: "請先登入",
+        });
+        router.push("/login");
+        return;
+      }
+      try {
+        const { data } = await apiAuth.post("/users/likeAnimalsList", {
+          _id,
+        });
+        likeAnimalsList.value = data.result;
+        Swal.fire({
+          icon: "success",
+          title: "成功",
+          text: "加入至毛孩收藏",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: error?.response?.data?.message || "發生錯誤",
+        });
+      }
+    };
+
+//從毛孩收藏移除 
+const deleteLikeAnimalsList = async ({ _id }) => {
+  if (token.value.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "失敗",
+      text: "請先登入",
+    });
+    router.push("/login");
+    return;
+  }
+  try {
+    const { data } = await apiAuth.delete("/users/likeAnimalsList", {
+      _id,
+    });
+    likeAnimalsList.value = data.result;
+    Swal.fire({
+      icon: "success",
+      title: "從毛孩收藏移除",
+    
+    });
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "失敗",
+      text: error?.response?.data?.message || "發生錯誤",
+    });
+  }
+};
+
+
+
     // 結帳
     // const checkout = async () => {
     //   try {
@@ -150,13 +182,15 @@ export const useUserStore = defineStore(
       token,
       name,
       account,
-      list,
+      likeAnimalsList,
       dayList,
       role,
       isAdmin,
       login,
       logout,
       getUser,
+      addLikeAnimalsList,
+      deleteLikeAnimalsList,
       isLogin,
     };
   },

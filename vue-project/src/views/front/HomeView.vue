@@ -1,6 +1,6 @@
 <template>
   首頁
-  <n-carousel>
+  <n-carousel v-if="isHome">
     <img
       class="carousel-img"
       src="https://picsum.photos/1920/1080/?random=10"
@@ -12,16 +12,21 @@
 
   <!-- v-col(v-for="product in products" :key="product._id" cols="12" md="6" lg="3") -->
   <div id="animal-card">
-    
     <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->
-      <n-gi v-for="animal in animals" :key="animal._id">
+      <n-gi v-for="animal in displayAnimals" :key="animal._id">
         <AnimalCard v-bind="animal"></AnimalCard>
       </n-gi>
     </n-grid>
-    
   </div>
-  <!-- ProductCard(v-bind="animal") -->
+
+  <n-pagination
+    v-model:page="page"
+    v-model:page-size="pageSize"
+    :page-count="pageCount"
+    show-size-picker
+    :page-sizes="[12, 24, 36, 48]"
+  />
 </template>
 
 <style lang="scss">
@@ -37,25 +42,40 @@
   display: grid;
   justify-content: center;
   .n-grid {
-  grid-column-gap: 2vw !important;
-  grid-row-gap: 3vh !important;
-
+    grid-column-gap: 2vw !important;
+    grid-row-gap: 3vh !important;
   }
 }
 </style>
 
 <script setup>
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import { api } from "@/plugins/axios";
 import Swal from "sweetalert2";
 import AnimalCard from "../../components/AnimalCard.vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const animals = reactive([]);
+const isHome = computed(()=>{
+  if (route.name === "home") {
+    return true;
+  } else {
+    return false;
+  }
+});
 
+const page = ref(1);
+const pageCount = ref(0);
+const pageSize = ref(12);
+const displayAnimals = computed(() => {
+  const skipAmount = (page.value - 1) * pageSize.value;
+  return animals.slice(skipAmount, skipAmount + pageSize.value);
+});
 (async () => {
   try {
     const { data } = await api.get("/animals");
-
     animals.push(...data.result);
+    pageCount.value = Math.ceil(animals.length / pageSize.value);
   } catch (error) {
     Swal.fire({
       icon: "error",
@@ -64,4 +84,5 @@ const animals = reactive([]);
     });
   }
 })();
+
 </script>

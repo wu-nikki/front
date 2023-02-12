@@ -29,10 +29,10 @@
     <div class="contect">
       {{ size }}{{ color }}{{ variety }}{{ gender }}{{ kind }}
     </div>
-    <template #footer> 我在: {{ shelterName.place }}</template>
+    <template #footer> 我在:{{ shelterName.place }}</template>
     <template #action>
       <div class="heart">
-        <n-button quaternary circle @click="activateHeart()">
+        <n-button quaternary circle @click="activateHeart(_id)">
           <template #icon>
             <n-icon v-if="HeartOutlineColor"><HeartOutline /></n-icon>
             <n-icon v-if="HeartColor"><Heart /></n-icon>
@@ -40,9 +40,7 @@
         </n-button>
       </div>
       <router-link :to="'/animals/' + _id">
-        <n-button class="animal" ghost>
-          詳細介紹
-        </n-button></router-link
+        <n-button class="animal" ghost> 詳細介紹 </n-button></router-link
       >
     </template>
   </n-card>
@@ -102,7 +100,9 @@
         // colorQuaternary: "#fff",
       }
     }
-
+    a {
+      text-decoration: none;
+    }
     .heart {
       .n-button {
         margin-left: calc(0.1vw + 5px);
@@ -133,24 +133,10 @@
 <script setup>
 import { HeartOutline, Heart } from "@vicons/ionicons5";
 import { ref } from "vue";
-
+import { apiAuth } from "@/plugins/axios";
 // import { storeToRefs } from "pinia";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
-
-const user = useUserStore();
-const router = useRouter();
-const HeartOutlineColor = ref(true);
-const HeartColor = ref(false);
-const activateHeart = () => {
-  HeartOutlineColor.value = !HeartOutlineColor.value;
-  HeartColor.value = !HeartColor.value;
-  // console.log(HeartOutlineColor.value);
-};
-// const { isLogin } = storeToRefs(user);
-// const { logout } = user;
-
-const Details = () => router.push("/animals");
 
 defineProps({
   _id: {
@@ -187,8 +173,30 @@ defineProps({
   },
   // 公告收容所
   shelterName: {
-    type: String,
+    type: Object,
     required: true,
   },
 });
+const user = useUserStore();
+const router = useRouter();
+const HeartOutlineColor = ref(true);
+const HeartColor = ref(false);
+
+const activateHeart = async (animalID) => {
+  try {
+    if (HeartColor.value) {
+      await apiAuth.delete("/users/likeAnimalsList/" + animalID);
+    } else if (HeartOutlineColor.value) {
+      await apiAuth.post("/users/likeAnimalsList/" + animalID);
+    }
+    HeartOutlineColor.value = !HeartOutlineColor.value;
+    HeartColor.value = !HeartColor.value;
+  } catch (error) {
+  } finally {
+  }
+
+  // console.log(HeartOutlineColor.value);
+};
+
+
 </script>

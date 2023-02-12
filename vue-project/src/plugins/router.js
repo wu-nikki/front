@@ -50,7 +50,7 @@ const router = createRouter({
         {
           path: "animals",
           name: "animals",
-          component: () => import("@/views/front/animalsView.vue"),
+          component: FrontHomeView,
           meta: {
             title: "認養毛孩",
             login: false,
@@ -60,7 +60,7 @@ const router = createRouter({
         {
           path: "animals/:id",
           name: "animal",
-          component: () => import("@/views/front/animal.vue"),
+          component: () => import("@/views/front/Animal.vue"),
           meta: {
             title: "個別毛孩頁面",
             login: false,

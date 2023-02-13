@@ -7,14 +7,16 @@
         <thead>
           <tr>
             <th>排序</th>
+            <th>收容所圖片</th>
             <th>收容所名稱</th>
             <th>編輯</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="shelter in shelters" :key="shelter._id">
+          <tr v-for="(shelter, idx) in shelters" :key="shelter._id">
             <td>{{ shelter.seq }}</td>
+            <td><n-image width="150" :src="shelter.img" /></td>
             <td>{{ shelter.place }}</td>
             <td>
               <n-button quaternary circle @click="openDialog(idx)">
@@ -27,6 +29,41 @@
         </tbody>
       </n-table>
     </div>
+    <!--  -->
+    <!-- <n-dialog-provider v-model="form.dialog"> -->
+    <n-modal v-model:show="showModal" preset="card" title="收容所資料">
+      <n-form
+        ref="valid"
+        :model="form"
+        @submit.prevent="submit"
+        label-placement="left"
+      >
+        <n-form-item-row label="排序: ">
+          <n-input v-model:value="form.seq"></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row>
+          <n-form-item>
+            <n-button
+              :disabled="form.loading"
+              quaternary
+              type="primary"
+              @click="submit"
+            >
+              送出
+            </n-button>
+            <n-button
+              :disabled="form.loading"
+              quaternary
+              type="primary"
+              @click="form.dialog = false"
+            >
+              取消
+            </n-button>
+          </n-form-item>
+        </n-form-item-row>
+      </n-form>
+    </n-modal>
   </div>
 </template>
 
@@ -41,45 +78,67 @@
     margin-bottom: 20vh;
     .n-table {
       --n-border-radius: 15px !important;
-      width: 40vw;
+      width: 50vw;
     }
-    .n-table th{
+    .n-table th {
       font-weight: bolder !important;
       font-size: 20px;
     }
-    .n-table tr{
-
+    .n-table tr {
       font-size: 16px;
     }
     tr {
       & :nth-child(1),
-      :nth-child(3) {
+      :nth-child(4) {
         text-align: center;
       }
     }
-    .n-button {
-      --n-color: rgba(255, 255, 255, 0.8) !important;
-      --n-color-hover: #ffe3da !important;
-      --n-text-color-hover: rgba(0, 0, 0, 0.8) !important;
+    tbody tr {
+      td:nth-child(2) {
+        width: 200px !important;
+
+        height: 200px !important;
+      }
     }
-    .n-button__icon {
-      font-size: 1.5rem;
-    }
+  }
+
+  .n-button {
+    --n-color: rgba(255, 255, 255, 0.8) !important;
+    --n-color-hover: #ffe3da !important;
+    --n-text-color-hover: rgba(0, 0, 0, 0.8) !important;
+  }
+  .n-button__icon {
+    font-size: 1.5rem;
+  }
+}
+
+.n-modal {
+  width: 60vw;
+  .n-button {
+    --n-color: rgba(255, 255, 255, 0.8) !important;
+    --n-color-hover: #ffe3da !important;
+    --n-text-color-hover: rgba(0, 0, 0, 0.8) !important;
+    --n-text-color: #fd784eff !important;
+  }
+  .n-button__icon {
+    font-size: 1.5rem;
   }
 }
 </style>
 
 <script setup>
 import { CreateOutline } from "@vicons/ionicons5";
-
+import { useDialog } from "naive-ui";
 import { apiAuth } from "@/plugins/axios";
 import { reactive } from "vue";
 import Swal from "sweetalert2";
+// const dialog = useDialog()
+const showModal = ref(false);
 
 const shelters = reactive([]);
 const form = reactive({
   _id: "",
-  seq: "",
+  seq: "a",
   img: "",
   place: "",
   cityName: "",
@@ -90,27 +149,29 @@ const form = reactive({
   lat: "",
   valid: false,
   loading: false,
-  dialog: false,
+  // dialog: false,
 });
 
 const openDialog = (idx) => {
   // -1 代表目前要新增的東西不在陣列裡面
 
-  form._id = products[idx]._id;
-  form.seq = products[idx].seq;
+  form._id = shelters[idx]._id;
+  form.seq = shelters[idx].seq;
   form.img = undefined;
-  form.place = products[idx].place;
-  form.cityName = products[idx].cityName;
-  form.tel = products[idx].tel;
-  form.add = products[idx].add;
-  form.openTime = products[idx].openTime;
-  form.lon = products[idx].lon;
-  form.lat = products[idx].lat;
+  form.place = shelters[idx].place;
+  form.cityName = shelters[idx].cityName;
+  form.tel = shelters[idx].tel;
+  form.add = shelters[idx].add;
+  form.openTime = shelters[idx].openTime;
+  form.lon = shelters[idx].lon;
+  form.lat = shelters[idx].lat;
 
   form.valid = false;
   form.loading = false;
 
-  form.dialog = true;
+  // form.dialog = true;
+
+  showModal.value = !showModal.value;
 };
 
 //

@@ -351,6 +351,38 @@ const options = computed(() => {
     },
     //
     {
+      label: "收容所管理",
+      key: "收容所管理",
+
+      children: [
+        {
+          type: "group",
+          children: [
+            {
+              key: "divider-1",
+              type: "divider",
+            },
+            {
+              label: () =>
+                h(
+                  RouterLink,
+                  {
+                    to: "/admin/shelters",
+                  },
+                  { default: () => "收容所資料" }
+                ),
+              key: "admin/shelters",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: "divider-1",
+      type: "divider",
+    },
+    //
+    {
       label: "會員管理",
       key: "會員管理",
 

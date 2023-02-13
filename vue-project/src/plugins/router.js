@@ -78,9 +78,9 @@ const router = createRouter({
           },
         },
         {
-          path: "chooseShelter",
-          name: "chooseShelter",
-          component: () => import("@/views/front/chooseShelter.vue"),
+          path: "shelters/:id",
+          name: "shelter",
+          component: () => import("@/views/front/shelter.vue"),
           meta: {
             title: "個別收容所",
             login: false,
@@ -151,7 +151,16 @@ const router = createRouter({
 {
   path: "/admin",
   component: AdminLayout,
-  children: [
+  children: [   {
+    path: "carousel",
+    name: "admin-Carousel",
+    component: () => import("@/views/admin/CarouselView.vue"),
+    meta: {
+      title: "頁面管理-首頁輪播設定",
+      login: true,
+      admin: true,
+    },
+  },
     {
       path: "FriendlyInformation",
       name: "admin-FriendlyInformation",
@@ -173,11 +182,11 @@ const router = createRouter({
       },
     },
     {
-      path: "carousel",
-      name: "admin-Carousel",
-      component: () => import("@/views/admin/CarouselView.vue"),
+      path: "shelters",
+      name: "admin-shelters",
+      component: () => import("@/views/admin/shelters.vue"),
       meta: {
-        title: "頁面管理-首頁輪播設定",
+        title: "收容所資料管理",
         login: true,
         admin: true,
       },

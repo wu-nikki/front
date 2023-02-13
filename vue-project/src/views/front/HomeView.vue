@@ -1,5 +1,5 @@
 <template>
-  首頁
+  
   <n-carousel v-if="isHome">
     <img
       class="carousel-img"
@@ -25,7 +25,7 @@
     v-model:page-size="pageSize"
     :page-count="pageCount"
     show-size-picker
-    :page-sizes="[12, 24, 36, 48]"
+    :page-sizes="[12, 24, 36]"
   />
 </template>
 
@@ -45,6 +45,18 @@
     grid-column-gap: 2vw !important;
     grid-row-gap: 3vh !important;
   }
+}
+.n-pagination {
+  margin: 30px;
+  justify-content: center;
+  --n-item-text-color-hover: rgb(252, 170, 145) !important;
+  --n-item-text-color-active: rgb(237 102 62) !important;
+  --n-item-text-color-pressed: rgb(252, 170, 145) !important;
+  --n-item-border-active: 2px solid #fd784e !important;
+}
+.n-pagination-item--active {
+  font-size: 17px;
+  font-weight: bolder;
 }
 </style>
 

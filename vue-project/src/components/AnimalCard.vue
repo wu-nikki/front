@@ -89,7 +89,7 @@
         --n-ripple-color: rgb(139, 38, 4) !important;
         --n-border: 1px solid rgb(255, 227, 218) !important;
         --n-border-hover: 2px solid rgb(252, 170, 145) !important;
-        --n-border-pressed: 2px solid #fd784eff !important;
+        --n-border-pressed: 2px solid #fd784e !important;
         --n-border-focus: 1px solid rgb(255, 227, 218) !important;
 
         //       colorPrimary: "#FD784EFF",
@@ -141,7 +141,7 @@ import { useRouter } from "vue-router";
 defineProps({
   _id: {
     type: String,
-    required: [true, "https://i.imgur.com/yfhkJ0F.jpg"],
+    required: true,
   },
   img: {
     type: String,

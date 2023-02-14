@@ -37,13 +37,8 @@
       title="收容所資料"
       :trap-focus="false"
     >
-      <!-- 加上 @submit.prevent 後畫面不會重新載入。 -->
-      <n-form
-        ref="valid"
-        :model="form"
-        @submit.prevent="submit"
-        label-placement="left"
-      >
+      <!-- 加上     @submit.prevent="submit" 後畫面不會重新載入。 -->
+      <n-form ref="valid" :model="form" label-placement="left" :rules="rules">
         <n-form-item-row label="排序: " path="seq">
           <n-input v-model:value="form.seq" placeholder="修改排序"></n-input>
         </n-form-item-row>
@@ -89,6 +84,8 @@
           <n-upload
             v-model:value="form.img"
             list-type="image-card"
+            accept=".jpg,.jpeg,.png,.gif,.tiff,.svg"
+            :default-file-list="originalImg"
             @change="handleChange"
           />
           <!--     accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" -->
@@ -117,8 +114,8 @@
             <n-button
               :disabled="form.loading"
               quaternary
-             
-              @click="cancel()"
+              type="primary"
+              @click="cancel"
             >
               取消
             </n-button>
@@ -195,9 +192,9 @@ import { CreateOutline } from "@vicons/ionicons5";
 import { apiAuth } from "@/plugins/axios";
 import { reactive } from "vue";
 import Swal from "sweetalert2";
-// const dialog = useDialog()
-const showModal = ref(false);
 
+const showModal = ref(false);
+const originalImg = ref([]);
 const shelters = reactive([]);
 const valid = ref(null);
 const form = reactive({
@@ -215,9 +212,17 @@ const form = reactive({
   loading: false,
   // dialog: false,
 });
-const handleChange = (o) => {
-  form.img = o.fileList.map((img) => img.file);
+
+const handleChange = (options) => {
+  // form.img = options.fileList.map((img) => img.file);
+  let i = [];
+  let j = [];
+  i = options.fileList.map((img) => img.url).filter((url) => url !== null);
+  j = options.fileList.map((img) => img.file).filter((url) => url !== null);
+  form.img = [...i, ...j];
 };
+
+
 const openDialog = (idx) => {
   // -1 代表目前要新增的東西不在陣列裡面
 
@@ -234,53 +239,153 @@ const openDialog = (idx) => {
 
   form.valid = false;
   form.loading = false;
-
+  
   // form.dialog = true;
+ 
+
+
 
   showModal.value = !showModal.value;
+
 };
 
-const cancel = () => {
-  showModal.value = false;
-};
-//
-const submit = async () => {
-  // if (!form.valid) return;
-  const fd = new FormData();
-  // fd.append(key,value)
-  fd.append("seq", form.seq);
-  if (form.img.length >= 1) {
-    form.img.forEach((item) => {
-      fd.append("img", item);
-    });
-  }
-  fd.append("place", form.place);
-  fd.append("cityName", form.cityName);
-  fd.append("tel", form.tel);
-  fd.append("add", form.add);
-  fd.append("openTime", form.openTime);
-  fd.append("lon", form.lon);
-  fd.append("lat", form.lat);
 
+
+
+const cancel = async () => {
+  // showModal.value = false;
   try {
-    const { data } = await apiAuth.patch("/shelters/" + form._id, fd);
-    shelters[form.idx] = data.result;
-    Swal.fire({
-      icon: "success",
-      title: "成功",
-      text: "編輯成功",
-    });
-    form.dialog = false;
+    const { data } = await apiAuth.get("/shelters");
+    form.seq = data.result[0].seq;
+    form.place = data.result[0].place;
+    form.cityName = data.result[0].cityName;
+    form.tel = data.result[0].tel;
+    form.add = data.result[0].add;
+    form.openTime = data.result[0].openTime;
+    form.lon = data.result[0].lon;
+    form.lat = data.result[0].lat;
+    originalImg.value.push(
+      ...data.result[0].img.map((image, idx) => {
+        return {
+          id: idx.toString(),
+          name: idx.toString(),
+          status: "finished",
+          url: image,
+        };
+      })
+    );
+    console.log("1");
+    form.img = originalImg.value;
+    showModal.value = false;
   } catch (error) {
-    console.log(error);
     Swal.fire({
       icon: "error",
       title: "失敗",
       text: error?.response?.data?.message || "發生錯誤",
     });
   }
-  form.loading = false;
-  showModal.value = false;
+};
+
+
+const rules = {
+  seq: [
+    {
+      required: true,
+      message: "請輸入排序",
+    },
+  ],
+  place: [
+    {
+      required: true,
+      message: "請輸入收容所名稱",
+    },
+  ],
+  cityName: [
+    {
+      required: true,
+      message: "請輸入所在縣市",
+    },
+  ],
+  tel: [
+    {
+      required: true,
+      message: "請輸入電話",
+    },
+  ],
+  add: [
+    {
+      required: true,
+      message: "請輸入地址",
+    },
+  ],
+  openTime: [
+    {
+      required: true,
+      message: "請輸入開放時間",
+    },
+  ],
+  lon: [
+    {
+      required: true,
+      message: "請輸入經度",
+    },
+  ],
+  lat: [
+    {
+      required: true,
+      message: "請輸入緯度",
+    },
+  ],
+};
+
+
+//
+const submit = async () => {
+  valid.value?.validate(async (errors) => {
+    if (!errors) {
+      const fd = new FormData();
+      // fd.append(key,value)
+      fd.append("seq", form.seq);
+
+      // if (form.img.length >= 1) {
+      //   form.img.forEach((item) => {
+      //     fd.append("img", item);
+      //   });
+      // }
+      for (const i of form.img) {
+        fd.append("img", i);
+      }
+
+      fd.append("place", form.place);
+      fd.append("cityName", form.cityName);
+      fd.append("tel", form.tel);
+      fd.append("add", form.add);
+      fd.append("openTime", form.openTime);
+      fd.append("lon", form.lon);
+      fd.append("lat", form.lat);
+
+      try {
+        const { data } = await apiAuth.patch("/shelters/" + form._id, fd);
+
+        shelters[form.idx] = data.result;
+        Swal.fire({
+          icon: "success",
+          title: "成功",
+          text: "編輯成功",
+        });
+
+        form.dialog = false;
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: error?.response?.data?.message || "發生錯誤",
+        });
+      }
+      form.loading = false;
+      showModal.value = false;
+    }
+  });
 };
 
 // 立即執行

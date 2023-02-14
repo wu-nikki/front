@@ -18,7 +18,7 @@
 
     <!-- <router-link :to="'/shelters/' + _id"> -->
       <template #cover>
-        <img :src="img = 'https://i.imgur.com/yfhkJ0F.jpg'" />
+        <img :src="img ==''? 'https://i.imgur.com/yfhkJ0F.jpg':img[0]" />
         <!-- <img :src="img" /> -->
       </template>
     <!-- </router-link> -->
@@ -40,14 +40,14 @@
     text-align: center;
     border-radius: 10px;
     max-width: 350px;
-    max-height: 500px;
+    max-height: 350px;
     .n-card-cover {
       height: 100%;
       width: 100%;
     }
     img {
       object-fit: cover;
-
+      max-height: 200px;
       // max-height: 400px;
     }
     .n-card__content {

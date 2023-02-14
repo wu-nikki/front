@@ -87,8 +87,9 @@
 
         <n-form-item-row label="新增照片: " path="img">
           <n-upload
-            v-model:value="form.img"
             list-type="image-card"
+            v-model:value="form.img" 
+            :default-file-list="originalImg" 
             @change="handleChange"
           />
           <!--     accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" -->
@@ -114,12 +115,7 @@
             >
               送出
             </n-button>
-            <n-button
-              :disabled="form.loading"
-              quaternary
-             
-              @click="cancel()"
-            >
+            <n-button :disabled="form.loading" quaternary @click="cancel()">
               取消
             </n-button>
           </n-form-item>
@@ -191,15 +187,16 @@
 
 <script setup>
 import { CreateOutline } from "@vicons/ionicons5";
-
+import { useRouter } from "vue-router";
 import { apiAuth } from "@/plugins/axios";
 import { reactive } from "vue";
 import Swal from "sweetalert2";
 // const dialog = useDialog()
 const showModal = ref(false);
-
+const originalImg = ref([]);
 const shelters = reactive([]);
 const valid = ref(null);
+const router = useRouter();
 const form = reactive({
   _id: "",
   seq: "",
@@ -215,11 +212,17 @@ const form = reactive({
   loading: false,
   // dialog: false,
 });
-const handleChange = (o) => {
-  form.img = o.fileList.map((img) => img.file);
+const handleChange = (options) => {
+  console.log(options.fileList);
+  let i = []
+  let j = []
+  i = options.fileList.map(image => image.url).filter(url => url !== null)
+  j = options.fileList.map(image => image.file).filter(url => url !== null)
+  form.img = [...i, ...j]
 };
 const openDialog = (idx) => {
   // -1 代表目前要新增的東西不在陣列裡面
+  originalImg.value.length = 0;
 
   form._id = shelters[idx]._id;
   form.seq = shelters[idx].seq;
@@ -235,6 +238,16 @@ const openDialog = (idx) => {
   form.valid = false;
   form.loading = false;
 
+  originalImg.value.push(
+    ...form.img.map((image, idx) => {
+      return {
+        id: idx.toString(),
+        name: idx.toString(),
+        status: "finished",
+        url: image,
+      };
+    })
+  );
   // form.dialog = true;
 
   showModal.value = !showModal.value;
@@ -270,7 +283,8 @@ const submit = async () => {
       title: "成功",
       text: "編輯成功",
     });
-    form.dialog = false;
+    // form.dialog = false;
+    router.go()
   } catch (error) {
     console.log(error);
     Swal.fire({

@@ -16,7 +16,7 @@
         <tbody>
           <tr v-for="(shelter, idx) in shelters" :key="shelter._id">
             <td>{{ shelter.seq }}</td>
-            <td><n-image width="150" :src="shelter.img" /></td>
+            <td><n-image width="150" :src="shelter.img[0]" /></td>
             <td>{{ shelter.place }}</td>
             <td>
               <n-button quaternary circle @click="openDialog(idx)">
@@ -31,23 +31,85 @@
     </div>
     <!--  -->
     <!-- <n-dialog-provider v-model="form.dialog"> -->
-    <n-modal v-model:show="showModal" preset="card" title="收容所資料">
+    <n-modal
+      v-model:show="showModal"
+      preset="card"
+      title="收容所資料"
+      :trap-focus="false"
+    >
+      <!-- 加上 @submit.prevent 後畫面不會重新載入。 -->
       <n-form
         ref="valid"
         :model="form"
         @submit.prevent="submit"
         label-placement="left"
       >
-        <n-form-item-row label="排序: ">
-          <n-input v-model:value="form.seq"></n-input>
+        <n-form-item-row label="排序: " path="seq">
+          <n-input v-model:value="form.seq" placeholder="修改排序"></n-input>
         </n-form-item-row>
+
+        <n-form-item-row label="收容所名稱: " path="place">
+          <n-input
+            v-model:value="form.place"
+            placeholder="修改收容所名稱"
+          ></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="所在縣市: " path="cityName">
+          <n-input
+            v-model:value="form.cityName"
+            placeholder="修改所在縣市"
+          ></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="電話: " path="tel">
+          <n-input v-model:value="form.tel" placeholder="修改電話"></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="地址: " path="add">
+          <n-input v-model:value="form.add" placeholder="修改地址"></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="開放時間: " path="openTime">
+          <n-input
+            v-model:value="form.openTime"
+            placeholder="修改開放時間"
+          ></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="經度: " path="lon">
+          <n-input v-model:value="form.lon" placeholder="修改經度"></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="緯度: " path="lat">
+          <n-input v-model:value="form.lat" placeholder="修改緯度"></n-input>
+        </n-form-item-row>
+
+        <n-form-item-row label="新增照片: " path="img">
+          <n-upload
+            v-model:value="form.img"
+            list-type="image-card"
+            @change="handleChange"
+          />
+          <!--     accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" -->
+          <!-- @preview="handlePreview" -->
+        </n-form-item-row>
+
+        <!-- <n-form-item-row  path="img" label="舊照片: ">
+          <n-image :src="form.img[0]" width="100"></n-image>
+          <n-image :src="form.img[1]" width="100"></n-image>
+          <n-image :src="form.img[2]" width="100"></n-image>
+          <n-image :src="form.img[3]" width="100"></n-image>
+          <n-image :src="form.img[4]" width="100"></n-image>
+
+        </n-form-item-row> -->
 
         <n-form-item-row>
           <n-form-item>
             <n-button
               :disabled="form.loading"
               quaternary
-              type="primary"
+              attr-type="submit"
               @click="submit"
             >
               送出
@@ -56,7 +118,7 @@
               :disabled="form.loading"
               quaternary
               type="primary"
-              @click="form.dialog = false"
+              @click="cancel()"
             >
               取消
             </n-button>
@@ -89,6 +151,7 @@
     }
     tr {
       & :nth-child(1),
+      :nth-child(2),
       :nth-child(4) {
         text-align: center;
       }
@@ -136,10 +199,11 @@ import Swal from "sweetalert2";
 const showModal = ref(false);
 
 const shelters = reactive([]);
+const valid = ref(null);
 const form = reactive({
   _id: "",
-  seq: "a",
-  img: "",
+  seq: "",
+  img: [],
   place: "",
   cityName: "",
   tel: "",
@@ -147,17 +211,19 @@ const form = reactive({
   openTime: "",
   lon: "",
   lat: "",
-  valid: false,
+  // valid: false,
   loading: false,
   // dialog: false,
 });
-
+const handleChange = (o) => {
+  form.img = o.fileList.map((img) => img.file);
+};
 const openDialog = (idx) => {
   // -1 代表目前要新增的東西不在陣列裡面
 
   form._id = shelters[idx]._id;
   form.seq = shelters[idx].seq;
-  form.img = undefined;
+  form.img = shelters[idx].img;
   form.place = shelters[idx].place;
   form.cityName = shelters[idx].cityName;
   form.tel = shelters[idx].tel;
@@ -174,14 +240,20 @@ const openDialog = (idx) => {
   showModal.value = !showModal.value;
 };
 
+const cancel = () => {
+  showModal.value = false;
+};
 //
 const submit = async () => {
-  if (!form.valid) return;
-
+  // if (!form.valid) return;
   const fd = new FormData();
   // fd.append(key,value)
   fd.append("seq", form.seq);
-  fd.append("img", form.img);
+  if (form.img.length >= 1) {
+    form.img.forEach((item) => {
+      fd.append("img", item);
+    });
+  }
   fd.append("place", form.place);
   fd.append("cityName", form.cityName);
   fd.append("tel", form.tel);
@@ -191,17 +263,16 @@ const submit = async () => {
   fd.append("lat", form.lat);
 
   try {
-    if (form._id.length > 0) {
-      const { data } = await apiAuth.patch("/shelters" + form._id, fd);
-      products[form.idx] = data.result;
-      Swal.fire({
-        icon: "success",
-        title: "成功",
-        text: "編輯成功",
-      });
-    }
+    const { data } = await apiAuth.patch("/shelters/" + form._id, fd);
+    shelters[form.idx] = data.result;
+    Swal.fire({
+      icon: "success",
+      title: "成功",
+      text: "編輯成功",
+    });
     form.dialog = false;
   } catch (error) {
+    console.log(error);
     Swal.fire({
       icon: "error",
       title: "失敗",
@@ -209,12 +280,13 @@ const submit = async () => {
     });
   }
   form.loading = false;
+  showModal.value = false;
 };
 
 // 立即執行
 (async () => {
   try {
-    const { data } = await apiAuth.get("/shelters/");
+    const { data } = await apiAuth.get("/shelters");
     shelters.push(...data.result);
   } catch (error) {
     Swal.fire({

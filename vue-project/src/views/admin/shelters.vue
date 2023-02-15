@@ -14,7 +14,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="(shelter, idx) in shelters" :key="shelter._id">
+          <tr v-for="(shelter, idx) in displayshelters" :key="shelter._id">
             <td>{{ shelter.seq }}</td>
             <td><n-image width="150" :src="shelter.img[0]" /></td>
             <td>{{ shelter.place }}</td>
@@ -29,6 +29,15 @@
         </tbody>
       </n-table>
     </div>
+
+    <n-pagination
+    v-model:page="page"
+    v-model:page-size="pageSize"
+    :page-count="pageCount"
+    show-size-picker
+    :page-sizes="[12]"
+  />
+
     <!--  -->
     <!-- <n-dialog-provider v-model="form.dialog"> -->
     <n-modal
@@ -96,14 +105,7 @@
           <!-- @preview="handlePreview" -->
         </n-form-item-row>
 
-        <!-- <n-form-item-row  path="img" label="舊照片: ">
-          <n-image :src="form.img[0]" width="100"></n-image>
-          <n-image :src="form.img[1]" width="100"></n-image>
-          <n-image :src="form.img[2]" width="100"></n-image>
-          <n-image :src="form.img[3]" width="100"></n-image>
-          <n-image :src="form.img[4]" width="100"></n-image>
 
-        </n-form-item-row> -->
 
         <n-form-item-row>
           <n-form-item>
@@ -133,7 +135,7 @@
     font-weight: bolder;
   }
   .table {
-    margin-bottom: 20vh;
+    margin-bottom: 5vh;
     .n-table {
       --n-border-radius: 15px !important;
       width: 50vw;
@@ -197,6 +199,16 @@ const originalImg = ref([]);
 const shelters = reactive([]);
 const valid = ref(null);
 const router = useRouter();
+
+
+const page = ref(1);
+const pageCount = ref(0);
+const pageSize = ref(12);
+const displayshelters = computed(() => {
+  const skipAmount = (page.value - 1) * pageSize.value;
+  return shelters.slice(skipAmount, skipAmount + pageSize.value);
+});
+
 const form = reactive({
   _id: "",
   seq: "",
@@ -302,6 +314,7 @@ const submit = async () => {
   try {
     const { data } = await apiAuth.get("/shelters");
     shelters.push(...data.result);
+    pageCount.value = Math.ceil(shelters.length / pageSize.value);
   } catch (error) {
     Swal.fire({
       icon: "error",

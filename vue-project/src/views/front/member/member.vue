@@ -1,31 +1,24 @@
 <template>
 
-
-  <img
-    class="carousel-img"
-    src="https://picsum.photos/1920/1080/?random=10"
-  />
-  <img
-    class="carousel-img"
-    src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel2.jpeg"
-  />
-  <img
-    class="carousel-img"
-    src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel3.jpeg"
-  />
-  <img
-    class="carousel-img"
-    src="https://naive-ui.oss-cn-beijing.aliyuncs.com/carousel-img/carousel4.jpeg"
-  />
+<n-h1>{{ user.name }}</n-h1>
+name
+  account
+  cellPhone
+  email
+  birthday
 
 會員資料頁面  
 </template>
 
 <style lang="scss">
-.carousel-img {
-width: 100%;
-height: 240px;
-object-fit: cover;
-}</style>
 
-<script setup></script>
+</style>
+
+<script setup>
+
+import { useUserStore } from "@/stores/user";
+import { useRoute } from "vue-router";
+
+const user = useUserStore();
+const route = useRoute();
+</script>

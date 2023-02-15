@@ -97,6 +97,22 @@ export const useUserStore = defineStore(
       }
     };
 
+    const editUsers = async () => {
+      if (token.value.length === 0) return;
+      try {
+        const { data } = await apiAuth.get("/users/:id");
+        name.value = data.result.name;
+        account.value = data.result.account;
+        cellPhone.value = data.result.cellPhone;
+        email.value = data.result.email;
+        birthday.value = data.result.birthday;
+      } catch (error) {
+        logout();
+      }
+    };
+
+
+
     //加入至毛孩收藏 
     const addLikeAnimalsList = async ({ _id }) => {
       if (token.value.length === 0) {
@@ -192,6 +208,7 @@ const deleteLikeAnimalsList = async ({ _id }) => {
       addLikeAnimalsList,
       deleteLikeAnimalsList,
       isLogin,
+      editUsers
     };
   },
   {

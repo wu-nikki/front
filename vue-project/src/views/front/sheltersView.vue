@@ -1,5 +1,5 @@
 <template>
-  所有收容所
+
   <div id="shelters-card">
     <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->

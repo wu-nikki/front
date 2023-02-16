@@ -54,15 +54,15 @@
     text-align: center;
     border-radius: 10px;
     max-width: 350px;
-   
-    height: 450px;
+
+    height: 500px;
     .n-card-cover {
       height: 100%;
       width: 100%;
     }
     img {
       object-fit: cover;
-
+      // width: 100%;
       // max-height: 400px;
     }
     .n-card__content {
@@ -198,6 +198,4 @@ const activateHeart = async (animalID) => {
 
   // console.log(HeartOutlineColor.value);
 };
-
-
 </script>

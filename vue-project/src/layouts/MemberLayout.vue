@@ -1,5 +1,5 @@
 <template>
-  <div class="member">
+  <div class="members">
     <n-config-provider :theme-overrides="themeOverrides">
       <n-layout style="height: calc(100vh - 60px)">
         <n-layout position="absolute" has-sider>
@@ -44,22 +44,22 @@
 //     background-color: #000
 // }
 
-.member {
+.members {
   // .n-layout-scroll-container{
   //   padding-top:60px ;
   // }
   .n-layout-sider {
     background-color: #ffe3da;
-    // padding-top: 60px;
+    padding-top: 60px;
     text-align: center;
-    max-width: 25% !important;
+    max-width: 25vw !important;
     display: flex;
     justify-content: center;
     transition: none;
     .n-avatar {
       width: 11vw;
       height: 11vw;
-      border: 0.4vw solid #fff;
+      border: 0.35vw solid #fff;
     }
 
     .n-h2 {
@@ -131,7 +131,7 @@
   }
 }
 @media (max-width: 768px) {
-  .member {
+  .members {
     .n-layout-sider {
       background-color: rgba(255, 227, 218, 0.5);
       padding-top: 0px;
@@ -201,7 +201,7 @@
 }
 
 @media (max-width: 545px) {
-  .member {
+  .members {
     .n-layout-sider {
       .n-button {
         justify-content: center;

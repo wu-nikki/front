@@ -50,7 +50,6 @@
       <n-form
         ref="valid"
         :model="form"
-        @submit.prevent="submit"
         label-placement="left"
       >
         <n-form-item-row label="排序: " path="seq">

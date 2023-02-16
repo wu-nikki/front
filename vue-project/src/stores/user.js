@@ -8,8 +8,13 @@ export const useUserStore = defineStore(
   "user",
   () => {
     const token = ref("");
+    const userImg = ref("");
     const name = ref("");
     const account = ref("");
+    const email = ref("");
+    const birthday = ref("");
+    const cellPhone = ref("");
+
     const likeAnimalsList = ref(0);
     const dayList = ref(0);
     const role = ref(0);
@@ -32,18 +37,20 @@ export const useUserStore = defineStore(
     const login = async (form) => {
       try {
         const { data } = await api.post("/users/login", form);
-        // console.log(token.value);
         token.value = data.result.token;
-        // console.log(token.value);
+        userImg.value = data.result.userImg;
         name.value = data.result.name;
-        // console.log(account.value);
         account.value = data.result.account;
+        email.value = data.result.email;
+        birthday.value = data.result.birthday;
+        cellPhone.value = data.result.cellPhone;
+
         // console.log(account.value);
 
         likeAnimalsList.value = data.result.likeAnimalsList;
         dayList.value = data.result.dayList;
         role.value = data.result.role;
-
+        // console.log(data);
         Swal.fire({
           icon: "success",
           title: "成功",
@@ -87,8 +94,13 @@ export const useUserStore = defineStore(
       if (token.value.length === 0) return;
       try {
         const { data } = await apiAuth.get("/users/me");
+        // console.log(data.result);
+        userImg.value = data.result.userImg;
         name.value = data.result.name;
         account.value = data.result.account;
+        email.value = data.result.email;
+        birthday.value = data.result.birthday;
+        cellPhone.value = data.result.cellPhone;
         likeAnimalsList.value = data.result.likeAnimalsList;
         dayList.value = data.result.dayList;
         role.value = data.result.role;
@@ -101,6 +113,7 @@ export const useUserStore = defineStore(
       if (token.value.length === 0) return;
       try {
         const { data } = await apiAuth.get("/users/:id");
+
         name.value = data.result.name;
         account.value = data.result.account;
         cellPhone.value = data.result.cellPhone;
@@ -111,9 +124,7 @@ export const useUserStore = defineStore(
       }
     };
 
-
-
-    //加入至毛孩收藏 
+    //加入至毛孩收藏
     const addLikeAnimalsList = async ({ _id }) => {
       if (token.value.length === 0) {
         Swal.fire({
@@ -143,37 +154,34 @@ export const useUserStore = defineStore(
       }
     };
 
-//從毛孩收藏移除 
-const deleteLikeAnimalsList = async ({ _id }) => {
-  if (token.value.length === 0) {
-    Swal.fire({
-      icon: "error",
-      title: "失敗",
-      text: "請先登入",
-    });
-    router.push("/login");
-    return;
-  }
-  try {
-    const { data } = await apiAuth.delete("/users/likeAnimalsList", {
-      _id,
-    });
-    likeAnimalsList.value = data.result;
-    Swal.fire({
-      icon: "success",
-      title: "從毛孩收藏移除",
-    
-    });
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "失敗",
-      text: error?.response?.data?.message || "發生錯誤",
-    });
-  }
-};
-
-
+    //從毛孩收藏移除
+    const deleteLikeAnimalsList = async ({ _id }) => {
+      if (token.value.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: "請先登入",
+        });
+        router.push("/login");
+        return;
+      }
+      try {
+        const { data } = await apiAuth.delete("/users/likeAnimalsList", {
+          _id,
+        });
+        likeAnimalsList.value = data.result;
+        Swal.fire({
+          icon: "success",
+          title: "從毛孩收藏移除",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: error?.response?.data?.message || "發生錯誤",
+        });
+      }
+    };
 
     // 結帳
     // const checkout = async () => {
@@ -196,6 +204,10 @@ const deleteLikeAnimalsList = async ({ _id }) => {
 
     return {
       token,
+      userImg,
+      email,
+      birthday,
+      cellPhone,
       name,
       account,
       likeAnimalsList,
@@ -208,12 +220,12 @@ const deleteLikeAnimalsList = async ({ _id }) => {
       addLikeAnimalsList,
       deleteLikeAnimalsList,
       isLogin,
-      editUsers
+      editUsers,
     };
   },
   {
     persist: {
-      key: "user",
+      key: "token",
     },
   }
 );

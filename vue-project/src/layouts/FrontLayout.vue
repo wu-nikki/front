@@ -232,6 +232,7 @@ html,
 </style>
 
 <script setup>
+
 import { LogInOutline } from "@vicons/ionicons5";
 import { h, ref, computed } from "vue";
 import { storeToRefs } from "pinia";

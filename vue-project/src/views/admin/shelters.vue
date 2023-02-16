@@ -224,7 +224,7 @@ const form = reactive({
   // dialog: false,
 });
 const handleChange = (options) => {
-  console.log(options.fileList);
+  // console.log(options.fileList);
   let i = []
   let j = []
   i = options.fileList.map(image => image.url).filter(url => url !== null)

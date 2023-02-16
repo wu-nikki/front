@@ -5,7 +5,7 @@
       <div class="nav">
         <!--  class="btnLogin"  v-if="isLogin"
           @click="logout" -->
-        <n-button class="btn" quaternary circle @click=" home ">
+        <n-button class="btn" quaternary circle @click="home">
           <template #icon>
             <n-icon><LogInOutline /></n-icon>
           </template>
@@ -33,7 +33,7 @@
               <n-divider />
 
               <div class="btn" v-if="btnActive">
-                <n-menu :options="options" />
+                <n-menu :options="options" :default-expanded-keys="[]" />
                 <!--           @select="handleSelect" -->
                 <!--           :default-expanded-keys="defaultExpandedKeys" -->
                 <!-- v-model:value="activeKey" -->
@@ -60,7 +60,6 @@
 }
 body {
   margin: 0;
-
 }
 
 .n-scrollbar-rail {
@@ -109,6 +108,7 @@ body {
     }
     .n-layout-sider-scroll-container {
       min-width: 25% !important;
+      
     }
     .n-avatar {
       width: 60px;
@@ -291,10 +291,11 @@ const options = computed(() => {
   return [
     {
       label: "頁面管理",
-      key: "頁面管理",
+      key: "view",
       children: [
         {
           type: "group",
+          key: "group",
           children: [
             {
               key: "divider-1",
@@ -312,7 +313,7 @@ const options = computed(() => {
               key: "admin/CarouselView",
             },
             {
-              key: "divider-1",
+              key: "divider-2",
               type: "divider",
             },
             {
@@ -327,7 +328,7 @@ const options = computed(() => {
               key: "admin/FriendlyInformation",
             },
             {
-              key: "divider-1",
+              key: "divider-3",
               type: "divider",
             },
             {
@@ -346,20 +347,20 @@ const options = computed(() => {
       ],
     },
     {
-      key: "divider-1",
+      key: "divider-4",
       type: "divider",
     },
     //
     {
       label: "收容所管理",
-      key: "收容所管理",
-
+      key: "shelters",
       children: [
         {
+          key: "group1",
           type: "group",
           children: [
             {
-              key: "divider-1",
+              key: "divider-5",
               type: "divider",
             },
             {
@@ -378,20 +379,21 @@ const options = computed(() => {
       ],
     },
     {
-      key: "divider-1",
+      key: "divider-6",
       type: "divider",
     },
     //
     {
       label: "會員管理",
-      key: "會員管理",
+      key: "Members",
 
       children: [
         {
           type: "group",
+          key: "group2",
           children: [
             {
-              key: "divider-1",
+              key: "divider-7",
               type: "divider",
             },
             {
@@ -410,20 +412,20 @@ const options = computed(() => {
       ],
     },
     {
-      key: "divider-1",
+      key: "divider-8",
       type: "divider",
     },
     //
     {
       label: "預約管理",
-      key: "預約管理",
+      key: "Reserve",
       children: [
         {
           type: "group",
-
+          key: "group3",
           children: [
             {
-              key: "divider-1",
+              key: "divider-9",
               type: "divider",
             },
             {

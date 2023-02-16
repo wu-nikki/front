@@ -69,7 +69,7 @@
         </n-form-item-row>
 
         <n-form-item-row label="帳號: " path="account">
-          <n-input v-model:value="form.account" :disabled="!active"></n-input>
+          <n-input v-model:value="form.account" disabled="true"></n-input>
         </n-form-item-row>
 
         <n-form-item-row label="手機號碼: " path="cellPhone">

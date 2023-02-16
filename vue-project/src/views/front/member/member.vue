@@ -29,16 +29,12 @@
         <!--     accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" -->
         <!-- @preview="handlePreview" -->
       </n-form-item-row>
-      <n-button
-        :disabled="form.loading"
-        quaternary
-        type="submit"
-        @click="submit"
-        >儲存
+      <n-button :disabled="form.loading" quaternary type="submit" @click="save"
+        >上傳
       </n-button>
     </n-form>
   </n-modal>
-
+  
   <div class="member-data">
     <n-form ref="valid" :model="form">
       <n-form-item-row>
@@ -69,7 +65,7 @@
           <n-input
             v-model:value="form.account"
             placeholder="帳號不可改"
-            :disabled="!active"
+            :disabled="true"
           ></n-input>
         </n-form-item>
         <n-form-item label="為了排版: " style="visibility: hidden">
@@ -121,9 +117,12 @@
 }
 .member-data {
   margin: 2vw 10vw 0 10vw;
-  height: 45vh;
+  height: 55vh;
   .n-input {
     width: 27vw;
+  }
+  .n-form-item-feedback-wrapper {
+    grid-area: none;
   }
   .n-form-item-blank {
     justify-content: space-around;
@@ -135,6 +134,7 @@
   margin: auto;
   width: 100px;
   height: 40px;
+  margin-bottom: 100px;
   font-size: 18px;
   border-radius: 20px;
   --n-text-color-hover: rgb(252, 170, 145) !important;
@@ -150,7 +150,8 @@
 
 @media (max-width: 768px) {
   .member-img {
-    margin-top: 0px;
+    margin-top: 1vw;
+
     height: 25vh;
     justify-content: center;
     .n-space {
@@ -165,6 +166,9 @@
   }
 }
 @media (max-width: 545px) {
+  .member-img {
+    margin-top: 1.5vw;
+  }
 }
 </style>
 
@@ -175,7 +179,7 @@ import { apiAuth } from "@/plugins/axios";
 import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
-const users = reactive([]);
+// const usersInfo = reactive({});
 const valid = ref(null);
 
 const user = useUserStore();
@@ -191,39 +195,102 @@ const showImg = () => {
 };
 
 const form = reactive({
-
-  name: user.name,
-  email: user.email,
-  birthday: user.birthday,
-  cellPhone: user.cellPhone,
-  account: user.account,
-  userImg: [],
   loading: false,
 });
-const handleChange = (o) => {
-  form.userImg = o.fileList.map((userImg) => userImg.file);
+const handleChange = (options) => {
+  // form.userImg = options.fileList.map((image) => image.file);
+  let i = []
+  let j = []
+  i = options.fileList.map(image => image.url).filter(url => url !== null)
+  j = options.fileList.map(image => image.file).filter(url => url !== null)
+  form.userImg  = [...i, ...j]
 };
 const openDialog = () => {
-  form.userImg = users.userImg;
   form.loading = false;
   showModal.value = !showModal.value;
 };
 
-const submit = async () => {}
+const save = () => {
+  console.log(originalImg.value);
+  originalImg.value.push(
+    ...form.userImg.map((image, idx) => {
+      return {
+        id: idx.toString(),
+        name: idx.toString(),
+        status: "finished",
+        url: image,
+      };
+    })
+  );
+  showModal.value = !showModal.value;
+};
 
+const submit = async () => {
+  const fd = new FormData();
+  if (form.userImg.length >= 1) {
+    form.userImg.forEach((item) => {
+      fd.append("userImg", item);
+    });
+  }
+  fd.append("name", form.name);
+  fd.append("email", form.email);
+  fd.append("birthday", form.birthday);
+  fd.append("cellPhone", form.cellPhone);
+  fd.append("account", form.account);
+
+  try {
+    const { data } = await apiAuth.patch("/users/" + form._id, fd);
+    console.log(form);
+    for (const k in usersInfo) delete usersInfo[k]
+    Object.assign(usersInfo, data.result)
+    console.log(form);
+    form._id = data.result.id
+    form.name = data.result.name
+    form.account = data.result.account
+    form.email = data.result.email
+    form.birthday = data.result.birthday
+    form.cellPhone = data.result.cellPhone
+    form.userImg = data.result.userImg
+    Swal.fire({
+      icon: "success",
+      title: "成功",
+      text: "編輯成功",
+    });
+    // form.dialog = false;
+    router.go();
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      icon: "error",
+      title: "失敗",
+      text: error?.response?.data?.message || "發生錯誤",
+    });
+  }
+  form.loading = false;
+};
 
 // 立即執行
-// (async () => {
-//   try {
-//     const { data } = await apiAuth.get("/users/me");
-//     users.push(...data.result);
-//     // console.log(data.result);
-//   } catch (error) {
-//     Swal.fire({
-//       icon: "error",
-//       title: "失敗",
-//       text: error?.response?.data?.message || "發生錯誤",
-//     });
-//   }
-// })();
+(async () => {
+  try {
+    const { data } = await apiAuth.get("/users");
+    for (const k in usersInfo) delete usersInfo[k]
+    Object.assign(usersInfo, data.result)
+    console.log(form);
+    form._id = data.result._id
+    form.name = data.result.name
+    form.account = data.result.account
+    form.email = data.result.email
+    form.birthday = data.result.birthday
+    form.cellPhone = data.result.cellPhone
+    form.userImg = data.result.userImg
+
+    // console.log(data.result);
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "失敗",
+      text: error?.response?.data?.message || "發生錯誤",
+    });
+  }
+})();
 </script>

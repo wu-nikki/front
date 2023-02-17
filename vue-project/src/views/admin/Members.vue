@@ -69,7 +69,7 @@
         </n-form-item-row>
 
         <n-form-item-row label="帳號: " path="account">
-          <n-input v-model:value="form.account" disabled="true"></n-input>
+          <n-input v-model:value="form.account" :disabled="true"></n-input>
         </n-form-item-row>
 
         <n-form-item-row label="手機號碼: " path="cellPhone">
@@ -264,7 +264,7 @@ const submit = async () => {
   fd.append("account", form.account);
   fd.append("cellPhone", form.cellPhone);
   fd.append("email", form.email);
-  // fd.append("birthday", form.birthday);
+  fd.append("birthday", form.birthday);
 
   try {
     const { data } = await apiAuth.patch("/users/" + form._id, fd);

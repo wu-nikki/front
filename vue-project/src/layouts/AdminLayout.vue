@@ -268,7 +268,6 @@ body {
 @media (max-width: 545px) {
   // .admin {
   //   .admin-content {
-
   //   }
   // }
 }

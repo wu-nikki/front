@@ -198,12 +198,12 @@ const form = reactive({
   loading: false,
 });
 const handleChange = (options) => {
-  // form.userImg = options.fileList.map((image) => image.file);
-  let i = []
-  let j = []
-  i = options.fileList.map(image => image.url).filter(url => url !== null)
-  j = options.fileList.map(image => image.file).filter(url => url !== null)
-  form.userImg  = [...i, ...j]
+  form.userImg = options.fileList.map((image) => image.file);
+  // let i = []
+  // let j = []
+  // i = options.fileList.map(image => image.url).filter(url => url !== null)
+  // j = options.fileList.map(image => image.file).filter(url => url !== null)
+  // form.userImg  = [...i, ...j]
 };
 const openDialog = () => {
   form.loading = false;
@@ -239,8 +239,9 @@ const submit = async () => {
   fd.append("account", form.account);
 
   try {
-    const { data } = await apiAuth.patch("/users/" + form._id, fd);
-    console.log(form);
+    console.log(form._id);
+    const { data } = await apiAuth.patch("/users/me/" + form._id, fd);
+  
     for (const k in usersInfo) delete usersInfo[k]
     Object.assign(usersInfo, data.result)
     console.log(form);
@@ -272,7 +273,7 @@ const submit = async () => {
 // 立即執行
 (async () => {
   try {
-    const { data } = await apiAuth.get("/users");
+    const { data } = await apiAuth.get("/users/me");
     for (const k in usersInfo) delete usersInfo[k]
     Object.assign(usersInfo, data.result)
     console.log(form);
@@ -286,6 +287,7 @@ const submit = async () => {
 
     // console.log(data.result);
   } catch (error) {
+    console.log(error);
     Swal.fire({
       icon: "error",
       title: "失敗",

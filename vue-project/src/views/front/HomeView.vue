@@ -1,5 +1,4 @@
 <template>
-  
   <n-carousel v-if="isHome">
     <img
       class="carousel-img"
@@ -68,7 +67,8 @@ import AnimalCard from "../../components/AnimalCard.vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const animals = reactive([]);
-const isHome = computed(()=>{
+const likeAnimalsList = reactive([]);
+const isHome = computed(() => {
   if (route.name === "home") {
     return true;
   } else {
@@ -88,6 +88,9 @@ const displayAnimals = computed(() => {
     const { data } = await api.get("/animals");
     animals.push(...data.result);
     pageCount.value = Math.ceil(animals.length / pageSize.value);
+
+    // const { LikeData } = await api.get("/users/likeAnimalsList");
+    // likeAnimalsList.push(...LikeData.result);
   } catch (error) {
     Swal.fire({
       icon: "error",
@@ -96,5 +99,4 @@ const displayAnimals = computed(() => {
     });
   }
 })();
-
 </script>

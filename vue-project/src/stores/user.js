@@ -108,7 +108,23 @@ export const useUserStore = defineStore(
         logout();
       }
     };
+    //  會員管理自己的資料
+    const editUser = async () => {
+      if (token.value.length === 0) return;
+      try {
+        const { data } = await apiAuth.get("/users/me");
 
+        name.value = data.result.name;
+        account.value = data.result.account;
+        cellPhone.value = data.result.cellPhone;
+        email.value = data.result.email;
+        birthday.value = data.result.birthday;
+      } catch (error) {
+        logout();
+      }
+    };
+
+    // 編輯會員們資料
     const editUsers = async () => {
       if (token.value.length === 0) return;
       try {
@@ -139,7 +155,7 @@ export const useUserStore = defineStore(
         const { data } = await apiAuth.post("/users/likeAnimalsList", {
           _id,
         });
-        likeAnimalsList.value = data.result;
+        likeAnimalsList.value = data.result.likeAnimalsList;
         Swal.fire({
           icon: "success",
           title: "成功",
@@ -149,7 +165,7 @@ export const useUserStore = defineStore(
         Swal.fire({
           icon: "error",
           title: "失敗",
-          text: error?.response?.data?.message || "發生錯誤",
+          text: error?.response?.data?.message || "加入至毛孩收藏錯誤",
         });
       }
     };
@@ -169,7 +185,7 @@ export const useUserStore = defineStore(
         const { data } = await apiAuth.delete("/users/likeAnimalsList", {
           _id,
         });
-        likeAnimalsList.value = data.result;
+        likeAnimalsList.value = data.result.likeAnimalsList;
         Swal.fire({
           icon: "success",
           title: "從毛孩收藏移除",
@@ -179,6 +195,43 @@ export const useUserStore = defineStore(
           icon: "error",
           title: "失敗",
           text: error?.response?.data?.message || "發生錯誤",
+        });
+      }
+    };
+    // 取毛孩收藏id
+    const getLikeAnimalsListById = async () => {
+      if (token.value.length === 0) return;
+      try {
+        const { data } = await apiAuth.get("/users/likeAnimalsList");
+        // console.log(data.result);
+        likeAnimalsList.value = data.result.likeAnimalsList;
+        Swal.fire({
+          icon: "success",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: error?.response?.data?.message || "取毛孩收藏id錯誤",
+        });
+      }
+    };
+
+    // 取毛孩收藏
+    const getLikeAnimalsList = async () => {
+      if (token.value.length === 0) return;
+      try {
+        const { data } = await apiAuth.get("/users/likeAnimalsList");
+        // console.log(data.result);
+        likeAnimalsList.value = data.result.likeAnimalsList;
+        Swal.fire({
+          icon: "success",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "失敗",
+          text: error?.response?.data?.message || "取毛孩收藏id錯誤",
         });
       }
     };
@@ -217,9 +270,13 @@ export const useUserStore = defineStore(
       login,
       logout,
       getUser,
+      getLikeAnimalsListById,
+      getLikeAnimalsList,
       addLikeAnimalsList,
       deleteLikeAnimalsList,
+
       isLogin,
+      editUser,
       editUsers,
     };
   },

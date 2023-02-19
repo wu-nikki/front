@@ -38,7 +38,7 @@ export const useUserStore = defineStore(
       try {
         const { data } = await api.post("/users/login", form);
         token.value = data.result.token;
-        userImg.value = data.result.userImg;
+        userImg.value = data.result.userImg;;
         name.value = data.result.name;
         account.value = data.result.account;
         email.value = data.result.email;

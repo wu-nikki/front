@@ -14,10 +14,10 @@
         <n-layout :native-scrollbar="false" id="animal-Data">
           <div class="btns">
             <div class="heart">
-              <n-button quaternary circle @click="activateHeart(_id)">
+              <n-button quaternary circle @click="activateHeart()">
                 <template #icon>
-                  <n-icon v-if="HeartOutlineColor"><HeartOutline /></n-icon>
-                  <n-icon v-if="HeartColor"><Heart /></n-icon>
+                  <n-icon v-if="animal.loved"><Heart /></n-icon>
+                  <n-icon v-else><HeartOutline /></n-icon>
                 </template>
               </n-button>
             </div>
@@ -29,14 +29,14 @@
 
           <!-- 大標 -->
           <!--  primary   info藍  warning黃 error紅 -->
-          <div style="padding-left: 24px; position: relative">
+          <div style="padding-left: 16px; position: relative">
             <div
               style="
                 position: absolute;
                 left: 0;
                 top: 0;
                 bottom: 0;
-                width: 20px;
+                width: 24px;
               "
             />
             <n-h1 prefix="bar" align-text type="error">
@@ -45,27 +45,51 @@
                 }}{{ animal.gender }}{{ animal.kind }}</n-h1
               >
             </n-h1>
+            <n-h3>
+              <n-text> 是否開放認養: </n-text>
+              <span> {{ animal.status }} </span></n-h3
+            >
+
+            <n-h3
+              ><n-text>開放認養日期: </n-text>
+              <span>{{ animal.opendate }} </span></n-h3
+            >
+
+            <n-h3
+              ><n-text>絕育狀態:</n-text>
+              <span>{{ animal.sterilization }}</span>
+            </n-h3>
+
+            <n-h3
+              ><n-text>年齡:</n-text> <span>{{ animal.age }}</span>
+            </n-h3>
+
+            <n-h3
+              ><n-text>收容編號:</n-text> <span>{{ animal.subid }}</span>
+            </n-h3>
+
+            <n-h3
+              ><n-text>描述:</n-text> <span>{{ animal.remark }}</span>
+            </n-h3>
+
+            <n-h3
+              ><n-text>所在收容所:</n-text>
+              <p>{{ animal.shelterName.place }}</p>
+            </n-h3>
+            <n-h3
+              ><n-text>收容所電話:</n-text>
+              <p>{{ animal.shelterName.tel }}</p>
+            </n-h3>
+            <n-h3
+              ><n-text>收容所地址:</n-text>
+              <p>{{ animal.shelterName.add }}</p>
+            </n-h3>
+            <n-h3
+              ><n-text>收容所開放時間:</n-text>
+              <p>{{ animal.shelterName.openTime }}</p>
+            </n-h3>
           </div>
-          <n-h3>是否開放認養: {{ animal.status }} </n-h3>
-          <n-h3>開放認養日期: {{ animal.opendate }} </n-h3>
-
-          <n-h3>絕育狀態: {{ animal.sterilization }} </n-h3>
-
-          <n-h3>年齡: {{ animal.age }} </n-h3>
-
-          <n-h3>收容編號: {{ animal.subid }} </n-h3>
-
-          <n-h3>描述: {{ animal.remark }} </n-h3>
-
-          <n-h3>所在收容所: {{ animal.shelterName.place }} </n-h3>
-          <n-h3>收容所電話: {{ animal.shelterName.tel }} </n-h3>
-          <n-h3>收容所地址: {{ animal.shelterName.add }} </n-h3>
-          <n-h3>收容所開放時間: {{ animal.shelterName.openTime }} </n-h3>
-
-          <!-- <n-text type="primary"> 123 </n-text>
-          <n-text depth="1"> Primary Depth </n-text>
-          <n-text depth="2"> Secondary Depth </n-text>
-          <n-text depth="3"> Tertiary Depth </n-text> -->
+          
         </n-layout>
       </n-layout>
     </n-layout>
@@ -104,11 +128,29 @@
     font-size: calc(1rem + 1.2vw);
     font-weight: bolder;
   }
+  .n-text {
+    font-size: calc(1rem + 0.5vw);
+
+    font-weight: bolder;
+  }
+  .n-h3 {
+    margin: 20px 0px 8px 0px;
+  }
+  span:nth-child(2) {
+    font-size: calc(1rem + 0.3vw);
+    margin-left: 1vw;
+  }
+  p {
+    font-size: calc(1rem + 0.3vw);
+
+    margin: 0px;
+  }
   .n-scrollbar-content {
     padding: 2vw 1vw;
   }
 }
 .btns {
+  z-index: 2;
   padding-right: 2vw;
   float: right;
   height: 85vh;
@@ -133,8 +175,10 @@
     }
   }
 }
+
 .goHome {
   .n-button {
+    background: #fff;
     --n-text-color-hover: rgb(252, 170, 145) !important;
     --n-text-color-pressed: #fd784eff !important;
     --n-text-color-focus: rgb(0, 0, 0) !important;
@@ -187,7 +231,7 @@
 import { HeartOutline, Heart } from "@vicons/ionicons5";
 
 import { reactive, ref } from "vue";
-import { api, apiAuth } from "@/plugins/axios";
+import { apiAuth } from "@/plugins/axios";
 import { useRoute, useRouter } from "vue-router";
 
 import { Swal } from "sweetalert2";
@@ -197,23 +241,16 @@ const route = useRoute();
 const router = useRouter();
 const user = useUserStore();
 
-// const user = useUserStore();
-const HeartOutlineColor = ref(true);
-const HeartColor = ref(false);
-
-const activateHeart = async (animalID) => {
+const activateHeart = async () => {
   try {
-    const animalID = animal._id;
-    if (HeartColor.value) {
-      console.log(apiAuth);
-      await apiAuth.delete("/users/likeAnimalsList/" + animalID);
-    } else if (HeartOutlineColor.value) {
-      await apiAuth.post("/users/likeAnimalsList/" + animalID);
+    if (animal.loved) {
+      await apiAuth.delete("/users/likeAnimalsList/" + animal._id);
+    } else {
+      await apiAuth.post("/users/likeAnimalsList/" + animal._id);
     }
-    HeartOutlineColor.value = !HeartOutlineColor.value;
-    HeartColor.value = !HeartColor.value;
+    animal.loved = !animal.loved;
   } catch (error) {
-  } finally {
+    console.log(error);
   }
 };
 
@@ -232,6 +269,7 @@ const animal = reactive({
   status: "",
   shelterName: {},
   remark: "",
+  loved: false,
 });
 
 const home = () => {
@@ -240,8 +278,7 @@ const home = () => {
 
 (async () => {
   try {
-    const { data } = await api.get("/animals/" + route.params.id);
-    console.log(data.result);
+    const { data } = await apiAuth.get("/animals/" + route.params.id);
     animal._id = data.result._id;
     animal.img = data.result.img;
     animal.size = data.result.size;
@@ -256,7 +293,7 @@ const home = () => {
     animal.status = data.result.status;
     animal.shelterName = data.result.shelterName;
     animal.remark = data.result.remark;
-
+    animal.loved = data.result.loved;
     // document.title = '購物網 | ' + product.name
   } catch (error) {
     Swal.fire({

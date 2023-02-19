@@ -61,13 +61,13 @@
 
 <script setup>
 import { computed, reactive } from "vue";
-import { api } from "@/plugins/axios";
+import { apiAuth } from "@/plugins/axios";
 import Swal from "sweetalert2";
 import AnimalCard from "../../components/AnimalCard.vue";
 import { useRoute } from "vue-router";
 const route = useRoute();
 const animals = reactive([]);
-const likeAnimalsList = reactive([]);
+
 const isHome = computed(() => {
   if (route.name === "home") {
     return true;
@@ -85,13 +85,14 @@ const displayAnimals = computed(() => {
 });
 (async () => {
   try {
-    const { data } = await api.get("/animals");
+    const { data } = await apiAuth.get("/animals");
     animals.push(...data.result);
     pageCount.value = Math.ceil(animals.length / pageSize.value);
 
     // const { LikeData } = await api.get("/users/likeAnimalsList");
     // likeAnimalsList.push(...LikeData.result);
   } catch (error) {
+    console.log(error);
     Swal.fire({
       icon: "error",
       title: "失敗",

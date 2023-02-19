@@ -34,8 +34,8 @@
       <div class="heart">
         <n-button quaternary circle @click="activateHeart(_id)">
           <template #icon>
-            <n-icon v-if="HeartOutlineColor"><HeartOutline /></n-icon>
-            <n-icon v-if="HeartColor"><Heart /></n-icon>
+            <n-icon v-if="isLoved"><Heart /></n-icon>
+            <n-icon v-else><HeartOutline /></n-icon>
           </template>
         </n-button>
       </div>
@@ -48,83 +48,82 @@
 <!-- <n-h2>{{ user.name }}</n-h2> -->
 
 <style lang="scss">
-#animal-card {
-  .n-card {
-    --n-border-color: rgb(227, 227, 228) !important;
-    text-align: center;
-    border-radius: 10px;
-    max-width: 350px;
 
-    height: 500px;
-    .n-card-cover {
-      height: 100%;
-      width: 100%;
+.n-card {
+  --n-border-color: rgb(227, 227, 228) !important;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 350px;
+
+  height: 500px;
+  .n-card-cover {
+    height: 100%;
+    width: 100%;
+  }
+  img {
+    object-fit: cover;
+    // width: 100%;
+    // max-height: 400px;
+  }
+  .n-card__content {
+    font-size: calc(1.3rem + 0.1vw);
+    font-weight: bolder;
+    padding: 15px 0 10px 0;
+  }
+  .n-card__footer {
+    font-size: calc(0.9rem + 0.1vw);
+
+    padding: 5px 0 10px 0;
+  }
+
+  .n-card__action {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 0 15px 0;
+
+    .animal {
+      --n-text-color-hover: rgb(252, 170, 145) !important;
+      --n-text-color-pressed: #fd784eff !important;
+      --n-text-color-focus: rgb(0, 0, 0) !important;
+
+      --n-ripple-color: rgb(139, 38, 4) !important;
+      --n-border: 1px solid rgb(255, 227, 218) !important;
+      --n-border-hover: 2px solid rgb(252, 170, 145) !important;
+      --n-border-pressed: 2px solid #fd784e !important;
+      --n-border-focus: 1px solid rgb(255, 227, 218) !important;
+
+      //       colorPrimary: "#FD784EFF",
+      // rgb(255, 227, 218)
+      // textColor: "#FD784EFF",
+      // colorQuaternaryHover: "rgba(253, 120, 78, 0.1)",
+      // colorQuaternaryPressed: "rgba(253, 120, 78, 0.08)",
+      // colorQuaternary: "#fff",
     }
-    img {
-      object-fit: cover;
-      // width: 100%;
-      // max-height: 400px;
-    }
-    .n-card__content {
-      font-size: calc(1.3rem + 0.1vw);
-      font-weight: bolder;
-      padding: 15px 0 10px 0;
-    }
-    .n-card__footer {
-      font-size: calc(0.9rem + 0.1vw);
+  }
+  a {
+    text-decoration: none;
+  }
+  .heart {
+    .n-button {
+      margin-left: calc(0.1vw + 5px);
+      width: 3rem;
+      height: 3rem;
+      font-weight: bolder !important;
+      transition: none;
+      --n-color-focus: white !important;
 
-      padding: 5px 0 10px 0;
-    }
-
-    .n-card__action {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 0 15px 0;
-
-      .animal {
-        --n-text-color-hover: rgb(252, 170, 145) !important;
-        --n-text-color-pressed: #fd784eff !important;
-        --n-text-color-focus: rgb(0, 0, 0) !important;
-
-        --n-ripple-color: rgb(139, 38, 4) !important;
-        --n-border: 1px solid rgb(255, 227, 218) !important;
-        --n-border-hover: 2px solid rgb(252, 170, 145) !important;
-        --n-border-pressed: 2px solid #fd784e !important;
-        --n-border-focus: 1px solid rgb(255, 227, 218) !important;
-
-        //       colorPrimary: "#FD784EFF",
-        // rgb(255, 227, 218)
-        // textColor: "#FD784EFF",
-        // colorQuaternaryHover: "rgba(253, 120, 78, 0.1)",
-        // colorQuaternaryPressed: "rgba(253, 120, 78, 0.08)",
-        // colorQuaternary: "#fff",
-      }
-    }
-    a {
-      text-decoration: none;
-    }
-    .heart {
-      .n-button {
-        margin-left: calc(0.1vw + 5px);
-        width: 3rem;
-        height: 3rem;
-        font-weight: bolder !important;
-        transition: none;
-        --n-color-focus: white !important;
-
-        .n-button__icon {
-          color: #f00;
-          font-size: 2rem;
-          //  會變愛心黑
-          // .n-icon-slot {
-          //   .n-icon {
-          //     &:nth-child(1) {
-          //       color: #000;
-          //     }
-          //   }
-          // }
-        }
+      .n-button__icon {
+        color: #f00;
+        font-size: 2rem;
+        //  會變愛心黑
+        // .n-icon-slot {
+        //   .n-icon {
+        //     &:nth-child(1) {
+        //       color: #000;
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -136,10 +135,9 @@ import { HeartOutline, Heart } from "@vicons/ionicons5";
 import { ref } from "vue";
 import { apiAuth } from "@/plugins/axios";
 // import { storeToRefs } from "pinia";
-import { useUserStore } from "@/stores/user";
-import { useRouter } from "vue-router";
-
-defineProps({
+// import { useUserStore } from "@/stores/user";
+// import { useRouter } from "vue-router";
+const props = defineProps({
   _id: {
     type: String,
     required: true,
@@ -176,24 +174,26 @@ defineProps({
   shelterName: {
     type: Object,
     required: true,
+  }, // 按愛心
+  loved: {
+    type: Boolean,
+    required: true,
   },
 });
-const user = useUserStore();
-const router = useRouter();
-const HeartOutlineColor = ref(true);
-const HeartColor = ref(false);
+const isLoved = ref(props.loved);
+// const user = useUserStore();
+// const router = useRouter();
 
 const activateHeart = async (animalID) => {
   try {
-    if (HeartColor.value) {
+    if (isLoved.value) {
       await apiAuth.delete("/users/likeAnimalsList/" + animalID);
-    } else if (HeartOutlineColor.value) {
+    } else {
       await apiAuth.post("/users/likeAnimalsList/" + animalID);
     }
-    HeartOutlineColor.value = !HeartOutlineColor.value;
-    HeartColor.value = !HeartColor.value;
+    isLoved.value = !isLoved.value;
   } catch (error) {
-  } finally {
+    console.log(error);
   }
 
   // console.log(HeartOutlineColor.value);

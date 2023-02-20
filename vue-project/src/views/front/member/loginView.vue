@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <n-config-provider :theme-overrides="themeOverrides">
-      <div class="card">
+      <div class="login-card">
         <n-card>
           <n-tabs
             default-value="login"
@@ -12,14 +12,18 @@
             <n-tab-pane name="login" tab="登入">
               <n-form ref="valid" :model="form" :rules="rules">
                 <n-form-item-row label="帳號" path="account">
-                  <n-input v-model:value="form.account"
+                  <n-input
+                    v-model:value="form.account"
                     placeholder="輸入帳號"
-                    @keydown.enter.prevent/>
+                    @keydown.enter.prevent
+                  />
                 </n-form-item-row>
                 <n-form-item-row label="密碼" path="password">
-                  <n-input v-model:value="form.password"
+                  <n-input
+                    v-model:value="form.password"
                     type="password"
-                    @keydown.enter.prevent/>
+                    @keydown.enter.prevent
+                  />
                 </n-form-item-row>
               </n-form>
               <n-button type="primary" block secondary strong @click="login">
@@ -92,7 +96,6 @@
   height: calc(100vh - 60px);
   background: url("../../../assets/bg/login.png");
   background-size: 90%;
-  
 
   .n-config-provider {
     width: 100%;
@@ -109,7 +112,13 @@
       border: 1px solid #ffe3da;
     }
   }
-  .card {
+  .n-card {
+    height: auto;
+    .n-card__content {
+      padding: 20px;
+    }
+  }
+  .login-card {
     position: absolute;
     margin: auto;
     top: 70px;
@@ -117,24 +126,23 @@
     bottom: 0;
     right: 0;
 
-    width: calc(350px + 9vw);
+    width: calc(300px + 9vw);
   }
-  .n-button{
+
+  .n-button {
     --n-color: rgb(255, 210, 210) !important;
-    --n-color-hover: rgba(253,  190, 190, 1) !important;
-    --n-color-pressed:rgba(255, 160, 160, 1) !important;
+    --n-color-hover: rgba(253, 190, 190, 1) !important;
+    --n-color-pressed: rgba(255, 160, 160, 1) !important;
     --n-color-hover: rgba(255, 190, 190, 1) !important;
-    --n-color-focus: rgba(253,  190, 190, 1) !important;
+    --n-color-focus: rgba(253, 190, 190, 1) !important;
     // rgb(253 120 78)
-
-
   }
 }
 </style>
 
 <script setup>
 import { ref, reactive } from "vue";
-import validator from 'validator';
+import validator from "validator";
 import { useUserStore } from "@/stores/user";
 import { api } from "@/plugins/axios";
 import Swal from "sweetalert2";
@@ -243,8 +251,8 @@ const login = async () => {
       title: "成功",
       text: "登入成功",
     });
-    
-    router.push('/member/me')
+
+    router.push("/member/me");
   } catch (error) {
     Swal.fire({
       icon: "error",

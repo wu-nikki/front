@@ -173,7 +173,11 @@
 }
 
 .n-modal {
-  width: 60vw;
+  max-width: 40vw;
+  min-width: 400px;
+
+  height: auto;
+  padding: 0 20px 0 20px;
   .n-button {
     --n-color: rgba(255, 255, 255, 0.8) !important;
     --n-color-hover: #ffe3da !important;
@@ -183,7 +187,9 @@
   .n-button__icon {
     font-size: 1.5rem;
   }
+  
 }
+
 </style>
 
 <script setup>
@@ -313,6 +319,8 @@ const submit = async () => {
   try {
     const { data } = await apiAuth.get("/shelters");
     shelters.push(...data.result);
+    shelters.sort((itemA,itemB)=>Number(itemA.seq) - Number(itemB.seq) 
+    );
     pageCount.value = Math.ceil(shelters.length / pageSize.value);
   } catch (error) {
     Swal.fire({

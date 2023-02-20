@@ -1,6 +1,6 @@
 <template>
   <div id="memberAnimal">
-    <n-grid cols="1 s:2 m:4 l:5" responsive="screen" item-responsive>
+    <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->
       <n-gi v-for="animal in displayAnimals" :key="animal._id">
         <AnimalCard v-bind="animal"></AnimalCard>
@@ -18,6 +18,7 @@
 </template>
 
 <style lang="scss">
+
 #memberAnimal {
   padding-top: 40px;
   margin: auto;
@@ -40,6 +41,12 @@
 .n-pagination-item--active {
   font-size: 17px;
   font-weight: bolder;
+}
+.heart{
+  .n-button{
+    background: #fff;
+    --n-color-hover:rgba(253, 120, 78, 0.1) !important;
+  }
 }
 </style>
 

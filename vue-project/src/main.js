@@ -13,6 +13,9 @@ import { createApp } from "vue";
 // Plugins
 import { registerPlugins } from "@/plugins";
 
+// leaflet
+import "leaflet/dist/leaflet.css";
+
 // 管理員圖片管理的套件
 // import '@/styles/main.sass'
 

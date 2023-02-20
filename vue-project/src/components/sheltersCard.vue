@@ -15,39 +15,43 @@
 }-->
 
   <n-card hoverable>
-
     <!-- <router-link :to="'/shelters/' + _id"> -->
-      <template #cover>
-        <img :src="img ==''? 'https://i.imgur.com/yfhkJ0F.jpg':img[0]" />
-        <!-- <img :src="img" /> -->
-      </template>
+    <template #cover>
+      <img :src="img == '' ? 'https://i.imgur.com/yfhkJ0F.jpg' : img[0]" />
+      <!-- <img :src="img" /> -->
+    </template>
     <!-- </router-link> -->
     <div class="contect">
       {{ place }}
-
     </div>
-    <template #footer>
+    <template #footer> 地址: {{ add }}<br> 電話: {{ tel }}</template>
+    <template #action>
+<router-link :to="'/shelters/' + _id">
+        <n-button class="shelter" ghost> 詳細介紹 </n-button></router-link
+      >
+    </template>
 
-      電話: {{tel}}</template>
+
+  
   </n-card>
 </template>
 <!-- <n-h2>{{ user.name }}</n-h2> -->
 
 <style lang="scss">
-#shelters-card {
+.shelters-card {
   .n-card {
     --n-border-color: rgb(227, 227, 228) !important;
     text-align: center;
     border-radius: 10px;
     max-width: 350px;
-    max-height: 350px;
+    max-height: 400px;
     .n-card-cover {
       height: 100%;
       width: 100%;
     }
     img {
       object-fit: cover;
-      max-height: 200px;
+      max-height: 300px;
       // max-height: 400px;
     }
     .n-card__content {
@@ -60,6 +64,20 @@
 
       padding: 5px 0 10px 0;
     }
+    .n-card__action {
+    .shelter {
+      --n-text-color-hover: rgb(252, 170, 145) !important;
+      --n-text-color-pressed: #fd784eff !important;
+      --n-text-color-focus: rgb(0, 0, 0) !important;
+
+      --n-ripple-color: rgb(139, 38, 4) !important;
+      --n-border: 2px solid rgb(255, 227, 218) !important;
+      --n-border-hover: 2px solid rgb(252, 170, 145) !important;
+      --n-border-pressed: 2px solid #fd784e !important;
+      --n-border-focus: 1px solid rgb(255, 227, 218) !important;
+
+      
+    }}
   }
 }
 </style>
@@ -73,8 +91,6 @@ import { useRouter } from "vue-router";
 const user = useUserStore();
 const router = useRouter();
 
-
-
 defineProps({
   _id: {
     type: String,
@@ -85,7 +101,7 @@ defineProps({
     required: true,
   },
   img: {
-    type: String || '',
+    type: String || "",
   },
   // 公告收容所
   place: {
@@ -106,7 +122,7 @@ defineProps({
   add: {
     type: String,
     required: true,
-  }, 
+  },
   // 開放時間
   openTime: {
     type: String,
@@ -116,13 +132,11 @@ defineProps({
   lon: {
     type: String,
     required: true,
-  }, 
+  },
   // 緯度
   lat: {
     type: String,
     required: true,
   },
 });
-
-
 </script>

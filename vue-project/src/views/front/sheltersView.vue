@@ -1,6 +1,6 @@
 <template>
 
-  <div id="shelters-card">
+  <div class="shelters-card">
     <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->
       <n-gi v-for="shelter in displayshelters" :key="shelter._id">
@@ -19,7 +19,7 @@
 </template>
 
 <style lang="scss">
-#shelters-card {
+.shelters-card {
   padding-top: 80px;
   margin: auto;
   width: 80%;
@@ -65,6 +65,8 @@ const displayshelters = computed(() => {
   try {
     const { data } = await api.get("/shelters");
     shelters.push(...data.result);
+    shelters.sort((itemA,itemB)=>Number(itemA.seq) - Number(itemB.seq) );
+
     pageCount.value = Math.ceil(shelters.length / pageSize.value);
   } catch (error) {
     Swal.fire({

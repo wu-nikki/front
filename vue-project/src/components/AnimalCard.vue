@@ -55,7 +55,7 @@
   border-radius: 10px;
   max-width: 350px;
 
-  height: 500px;
+  height: 450px;
   .n-card-cover {
     height: 100%;
     width: 100%;

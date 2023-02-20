@@ -1,7 +1,7 @@
 <template>
 
   <div class="shelters-card">
-    <n-grid cols="1 s:2 m:3 l:4" responsive="screen" item-responsive>
+    <n-grid cols="1 s:2 m:3 " responsive="screen" item-responsive>
       <!-- <n-gi span="3 545:2  768:1" -->
       <n-gi v-for="shelter in displayshelters" :key="shelter._id">
         <sheltersCard v-bind="shelter"></sheltersCard>

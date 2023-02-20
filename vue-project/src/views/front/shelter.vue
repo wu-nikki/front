@@ -1,86 +1,108 @@
 <template>
-  <div class="shelterData">
-    <n-layout position="absolute">
-      <n-layout has-sider position="absolute" style="top: 64px">
-        <n-layout-sider bordered :native-scrollbar="false">
-          <n-image
-            :src="
-              shelter.img == ''
-                ? 'https://i.imgur.com/yfhkJ0F.jpg'
-                : shelter.img
-            "
-          />
-        </n-layout-sider>
-        <n-layout :native-scrollbar="false" id="shelter-Data">
-          <div class="btns">
-            <div class="goHome">
-              <n-button ghost @click="home()"> 回上頁 </n-button>
+  <div id="Shelter">
+    <div class="shelterImgData">
+      <n-layout position="absolute">
+        <n-layout has-sider position="absolute" style="top: 64px">
+          <n-layout-sider bordered :native-scrollbar="false">
+            <n-carousel autoplay>
+              <n-image
+                class="carousel-img"
+                v-for="i in imageCount"
+                :key="i"
+                :src="getImageUrl(i)"
+              />
+            </n-carousel>
+          </n-layout-sider>
+          <n-layout :native-scrollbar="false" class="shelter-Data">
+            <div class="btns">
+              <div class="goHome">
+                <n-button ghost @click="home()"> 回上頁 </n-button>
+              </div>
             </div>
-          </div>
 
-          <!-- 大標 -->
-          <!--  primary   info藍  warning黃 error紅 -->
-          <div style="padding-left: 16px; position: relative">
-            <div
-              style="
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 0;
-                width: 24px;
-              "
-            />
-            <n-h1 prefix="bar" align-text type="error">
-              <n-h1> {{ shelter.place }}</n-h1>
-            </n-h1>
-            <n-h3>
-              <n-text> 所在縣市: </n-text>
-              <span> {{ shelter.cityName }} </span></n-h3
-            >
-            <n-h3
-              ><n-text>收容所電話:</n-text>
-              <span> {{ shelter.tel }}</span>
-            </n-h3>
-            <n-h3
-              ><n-text>收容所地址:</n-text>
-              <p>{{ shelter.add }}</p>
-            </n-h3>
-            <n-h3
-              ><n-text>收容所開放時間:</n-text>
-              <p>{{ shelter.openTime }}</p>
-            </n-h3>
+            <!-- 大標 -->
+            <!--  primary   info藍  warning黃 error紅 -->
+            <div style="padding-left: 30px; position: relative">
+              <div
+                style="
+                  position: absolute;
+                  left: 0;
+                  top: -10px;
+                  bottom: 0;
+                  width: 24px;
+                "
+              />
+              <n-h1 prefix="bar" align-text type="error">
+                <n-h1> {{ shelter.place }}</n-h1>
+              </n-h1>
+              <n-h3>
+                <n-text> 所在縣市: </n-text>
+                <span> {{ shelter.cityName }} </span></n-h3
+              >
+              <n-h3
+                ><n-text>收容所電話:</n-text>
+                <span> {{ shelter.tel }}</span>
+              </n-h3>
+              <n-h3
+                ><n-text>收容所地址:</n-text>
+                <p>{{ shelter.add }}</p>
+              </n-h3>
+              <n-h3
+                ><n-text>收容所開放時間:</n-text>
+                <p>{{ shelter.openTime }}</p>
+              </n-h3>
 
-            <!-- <n-h3
+              <!-- <n-h3
               ><n-text>所在收容所: </n-text>
               <span>{{  shelter.place }} </span></n-h3
             > -->
-          </div>
+            </div>
+          </n-layout>
         </n-layout>
       </n-layout>
-    </n-layout>
-  </div>
-  <div id="map">
-    <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
+    </div>
+    <div id="map">
+      123
+      <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         layer-type="base"
         name="OpenStreetMap"
       ></l-tile-layer>
       <l-marker :lat-lng="markerLatLng"></l-marker>
-    </l-map>
+    </l-map> -->
+    </div>
   </div>
 </template>
 
 <style lang="scss">
-.shelterData {
-  height: 55vh;
+body {
+  overflow: hidden;
+}
+#Shelter {
+  display: flex;
+}
+.shelterImgData {
+  width: 50vw;
+  height: 100vh;
+
   .n-layout {
-    height: 55vh;
+    width: 50vw;
   }
+  .n-layout-scroll-container {
+    flex-flow: column !important;
+  }
+  // 圖片區
   .n-layout-sider {
-    width: 40% !important;
-    max-width: 40% !important;
-    height: 50vh;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 45vh;
+    max-height: 98% !important;
+
+    // .n-scrollbar-content {
+    //   // padding: 1vw 0.5vh;
+    // }
+
     .n-layout-sider-scroll-container {
       display: flex;
     }
@@ -88,16 +110,19 @@
       display: flex;
       align-items: center;
     }
-    .n-image {
-      width: 100%;
-      img {
+    .n-carousel {
+      .carousel-img {
+        height: 42vh;
+      }
+      .n-image {
+        justify-content: center;
         margin: auto;
-        width: calc(110px + 25vw);
+        width: calc(500px - 2vw);
       }
     }
   }
-  #shelter-Data {
-    height: 50vh;
+  .shelter-Data {
+    height: 52vh;
   }
   .n-scrollbar {
     min-width: 40% !important;
@@ -109,6 +134,9 @@
   .n-h1 {
     font-size: calc(1rem + 1.2vw);
     font-weight: bolder;
+    margin-top: 10px;
+
+    margin-bottom: 10px;
   }
   .n-text {
     font-size: calc(1rem + 0.5vw);
@@ -116,7 +144,7 @@
     font-weight: bolder;
   }
   .n-h3 {
-    margin: 15px 0px 2px 0px;
+    margin: 10px 0px 2px 0px;
   }
   span:nth-child(2) {
     font-size: calc(1rem + 0.2vw);
@@ -127,12 +155,12 @@
     margin: 0px;
   }
   .n-scrollbar-content {
-    padding: 2vw 1vw;
+    padding: 0vw 1vw;
   }
 }
 #map {
-  width: 100%;
-  height: 42vh;
+  width: 50vw;
+  height: 100vh;
 }
 .btns {
   z-index: 2;
@@ -176,9 +204,9 @@
 
 @media (max-width: 768px) {
   .shelterData {
-    .n-layout-scroll-container {
-      flex-direction: column !important;
-    }
+    // .n-layout-scroll-container {
+    //   flex-direction: column !important;
+    // }
 
     .n-layout-sider {
       width: 100% !important;
@@ -188,7 +216,7 @@
     .n-scrollbar {
       min-width: 100% !important;
     }
-    #shelter-Data {
+    .shelter-Data {
       .n-scrollbar-content {
         padding: 2vw 10vw;
       }
@@ -211,21 +239,26 @@
 </style>
 
 <script setup>
-
 import { reactive } from "vue";
 import { apiAuth } from "@/plugins/axios";
 import { useRoute, useRouter } from "vue-router";
 
 import { Swal } from "sweetalert2";
 import { useUserStore } from "@/stores/user";
+import { ref } from "vue";
 // Router是跳頁 ，Route是取現在路由資訊用
 const route = useRoute();
+const imageCount = ref(0);
+const getImageUrl = (i) => {
+  return shelter.img[i - 1];
+};
+
 const router = useRouter();
 const user = useUserStore();
 // const mapUrl= 'https://www.google.com.tw/maps/place/'
 const shelter = reactive({
   _id: "",
-  img: "",
+  img: [],
   place: "",
   cityName: "",
   tel: "",
@@ -239,16 +272,15 @@ const home = () => {
   router.go(-1);
 };
 
-
-
 // *** 放置地圖
-
 
 (async () => {
   try {
     const { data } = await apiAuth.get("/shelters/" + route.params.id);
     shelter._id = data.result._id;
     shelter.img = data.result.img;
+    imageCount.value = shelter.img.length;
+    // console.log(imageCount.value);
     shelter.place = data.result.place;
     shelter.cityName = data.result.cityName;
     shelter.tel = data.result.tel;
@@ -256,7 +288,7 @@ const home = () => {
     shelter.openTime = data.result.openTime;
     shelter.lon = data.result.lon;
     shelter.lat = data.result.lat;
-    
+
     // document.title = '購物網 | ' + product.name
   } catch (error) {
     Swal.fire({

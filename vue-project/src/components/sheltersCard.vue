@@ -43,15 +43,15 @@
     --n-border-color: rgb(227, 227, 228) !important;
     text-align: center;
     border-radius: 10px;
-    max-width: 350px;
+    max-width: 400px;
     max-height: 400px;
     .n-card-cover {
-      height: 100%;
+      height: 200px;
       width: 100%;
     }
     img {
       object-fit: cover;
-      max-height: 300px;
+      height: 200px;
       // max-height: 400px;
     }
     .n-card__content {

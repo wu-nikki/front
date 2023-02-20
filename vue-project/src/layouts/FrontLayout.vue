@@ -3,7 +3,7 @@
     <div class="nav">
       <div class="row">
         <div class="logo">
-          <img src="../assets/Logo.png" alt="" />
+          <img src="../assets/LOGO/1-02.png" alt="" />
         </div>
         <div class="menu">
           <n-button id="bar" quaternary circle @click="activate('right')">
@@ -80,17 +80,20 @@ html,
   margin: auto;
   line-height: 60px;
   .row {
-    width: 90vw;
+    width: 98vw;
     display: flex;
     height: 60px;
     margin: auto;
+    justify-content:space-between;
   }
   .logo {
+    z-index: 2;
     display: flex;
-    width: 15vw;
+    width: 11vw;
     align-items: center;
     img {
-      width: 50px;
+      width: calc(170px + 3vw);
+      // width: 50px;
     }
   }
 
@@ -103,9 +106,9 @@ html,
     }
     .n-menu {
       display: flex;
-      width: 70vw;
+      width: 65vw;
       justify-content: space-between;
-      font-size: calc(0.6rem + 0.4vw);
+      font-size: calc(0.7rem + 0.35vw);
       flex-grow: 1;
       font-weight: bolder;
       transition: none !important;
@@ -122,7 +125,7 @@ html,
       height: 85%;
     }
     .n-menu-item-content-header a {
-      padding: calc(0.2rem + 1.3vw);
+      padding: 0.7vw;
     }
     .n-menu--horizontal {
       display: flex;
@@ -154,11 +157,9 @@ html,
       width: 100%;
       justify-content: space-between;
       .logo {
-        width: 10vw;
-        align-items: flex-start;
+        padding-left: 1%;
         img {
-          width: 50px;
-          padding: 5px 0 0 38px;
+          width: 173px;
         }
       }
       .menu {
@@ -232,7 +233,6 @@ html,
 </style>
 
 <script setup>
-
 import { LogInOutline } from "@vicons/ionicons5";
 import { h, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
@@ -384,13 +384,10 @@ const themeOverrides = {
   },
   Card: {
     borderRadius: "10px",
-    actionColor:
-    "rgba(255, 255, 255, 1)",
+    actionColor: "rgba(255, 255, 255, 1)",
   },
 };
 </script>
-
-
 
 <!-- ,
   {

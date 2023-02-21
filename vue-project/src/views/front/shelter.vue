@@ -111,6 +111,7 @@ body {
       align-items: center;
     }
     .n-carousel {
+      text-align: center;
       .carousel-img {
         height: 42vh;
       }
@@ -132,7 +133,7 @@ body {
     --n-border-color: rgb(245, 245, 245);
   }
   .n-h1 {
-    font-size: calc(1rem + 1.2vw);
+    font-size: calc(1rem + 1.1vw);
     font-weight: bolder;
     margin-top: 10px;
 

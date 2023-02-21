@@ -3,7 +3,7 @@
     <div class="nav">
       <div class="row">
         <div class="logo">
-          <img src="../assets/LOGO/1-02.png" alt="" />
+          <img src="../assets/LOGO/1-01.png" alt="" />
         </div>
         <div class="menu">
           <n-button id="bar" quaternary circle @click="activate('right')">

@@ -276,18 +276,18 @@ const options = computed(() => {
       key: "member/animals.vue",
       icon: renderIcon(HeartSharp),
     },
-    {
-      label: () =>
-        h(
-          RouterLink,
-          {
-            to: "/member/reservel",
-          },
-          { default: () => "預約清單" }
-        ),
-      key: "member/reservel.vue",
-      icon: renderIcon(Notifications),
-    },
+    // {
+    //   label: () =>
+    //     h(
+    //       RouterLink,
+    //       {
+    //         to: "/member/reservel",
+    //       },
+    //       { default: () => "預約清單" }
+    //     ),
+    //   key: "member/reservel.vue",
+    //   icon: renderIcon(Notifications),
+    // },
   ];
 });
 

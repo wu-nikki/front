@@ -1,6 +1,6 @@
 <template>
   <n-carousel autoplay v-if="isHome">
-    <img class="carousel-img" src="../../assets/carousel/1.jpg"   />
+    <img class="carousel-img" src="../../assets/carousel/1.jpg" />
     <img class="carousel-img" src="../../assets/carousel/2.jpg" />
   </n-carousel>
 
@@ -27,16 +27,17 @@
       <n-grid-item span="24 m:18 l:15" style="line-height: 300px">
         <div class="green">
           <div class="filter">
+            <!-- :rules="rules" -->
             <n-form
               ref="formRef"
               :model="form"
-              :rules="rules"
               label-placement="left"
               label-width="auto"
               :style="{
                 maxWidth: '760px',
               }"
             >
+              <!-- path="kind" -->
               <n-form-item label="類別:" path="kind">
                 <n-radio-group v-model:value="form.kind" name="radiogroup1">
                   <n-space>
@@ -46,7 +47,7 @@
                   </n-space>
                 </n-radio-group>
               </n-form-item>
-
+              <!-- path="gender" -->
               <n-form-item label="性別:" path="gender">
                 <n-radio-group v-model:value="form.gender" name="radiogroup2">
                   <n-space>
@@ -56,11 +57,11 @@
                   </n-space>
                 </n-radio-group>
               </n-form-item>
-
+              <!-- path="color" -->
               <n-form-item class="color" label="毛色:" path="color">
                 <n-input v-model:value="form.color" placeholder="黑 白.." />
               </n-form-item>
-
+              <!--   path="shelterName" -->
               <n-form-item
                 class="selectShelter"
                 label="選擇收容所: "
@@ -68,12 +69,12 @@
               >
                 <n-select
                   v-model:value="form.shelterName"
-                  placeholder="Select"
+                  placeholder=""
                   :options="shelterOptions"
                 />
                 <!-- shelterOptions 選單表 -->
               </n-form-item>
-
+              <!-- path="subid" -->
               <n-form-item label="收容編號:" path="subid">
                 <n-input v-model:value="form.subid" placeholder="" />
               </n-form-item>
@@ -85,9 +86,18 @@
                     round
                     type="primary"
                     ghost
-                    @click="handleValidateButtonClick"
+                    @click="filterClick()"
                   >
                     搜尋
+                  </n-button>
+                  <n-button
+                    class="cleanBtn"
+                    round
+                    type="primary"
+                    ghost
+                    @click.prevent="clearForm()"
+                  >
+                    清空
                   </n-button>
                 </div>
               </n-form-item>
@@ -152,12 +162,12 @@
     border-radius: 70px;
   }
   .n-form {
-    padding: 1vw 10px 2px 2vw;
-    width: 95%;
+    padding: 1vw 1.2vw 2px 2vw;
+    width: 90%;
     margin: auto;
     height: 90%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -175,14 +185,18 @@
   //
   .n-form-item {
     height: 40px;
-    grid-template-columns: auto minmax(0, 150px);
+    grid-template-columns: auto minmax(0, 175px);
   }
   .n-form-item:nth-child(1),
   .n-form-item:nth-child(2) {
     grid-template-columns: auto minmax(0, 195px);
   }
+  .n-form-item:nth-child(4) {
+    grid-template-columns: auto minmax(0, 210px);
+  }
   .n-form-item:last-child {
     justify-items: center;
+    grid-template-columns: auto minmax(0, 200px);
   }
   .n-form-item-label {
     font-size: 18px;
@@ -194,7 +208,7 @@
 
   .selectShelter {
     .n-form-item-blank {
-      width: 150px;
+      width: 210px;
     }
   }
   .n-h1 {
@@ -208,7 +222,12 @@
     background: #fd784eff;
     width: 6px;
   }
-  .filterBtn {
+  .n-button {
+    margin: 0px 0.8rem;
+  }
+  .filterBtn,
+  .cleanBtn {
+    margin: 0px 1rem;
     font-size: 15px;
     --n-text-color: rgb(58, 58, 58) !important;
     --n-text-color-hover: rgb(253, 145, 112) !important;
@@ -249,14 +268,20 @@
 
 @media (max-width: 768px) {
   #filterA {
+    .filter {
+      height: 80%;
+    }
     .n-form {
       padding-bottom: 0px;
       height: 95%;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
     }
 
     .n-form-item {
       height: 30px;
-      grid-template-columns: auto minmax(0, 150px);
+      grid-template-columns: auto minmax(0, 180px);
     }
     .n-form-item:nth-child(1),
     .n-form-item:nth-child(2) {
@@ -267,15 +292,19 @@
 
 @media (max-width: 545px) {
   #filterA {
+    .filter {
+      height: 85%;
+    }
     .n-form {
-      height: 90%;
+      height: 95%;
       padding: 2px 0px 0px 12px;
-
-      justify-content: flex-start;
+      align-items: flex-end;
+      justify-content: space-around;
     }
     .n-form-item:last-child {
       justify-content: flex-end;
-      grid-template-columns: auto minmax(0, 100px);
+    }
+    .n-button {
     }
   }
 }
@@ -287,9 +316,9 @@ import { apiAuth } from "@/plugins/axios";
 import Swal from "sweetalert2";
 import AnimalCard from "../../components/AnimalCard.vue";
 import { useRoute } from "vue-router";
+
 const route = useRoute();
 const animals = reactive([]);
-
 const formRef = ref(null);
 const isHome = computed(() => {
   if (route.name === "home") {
@@ -298,45 +327,67 @@ const isHome = computed(() => {
     return false;
   }
 });
-
-const form = reactive({
-  _id: "",
-  // 動物類別
-  kind: ["犬", "貓", "其他"],
-  // 動物性別
-  gender: "",
-  color: "",
-  shelterName: "",
-  // 收容編號
-  subid: "",
-});
-const rules = {
-  kind: {
-    trigger: "change",
-  },
-};
-const shelterOptions = () => {
-  shelterName.map((v) => ({
-    label: String(v),
-    value: v,
-  }));
-};
-
 const page = ref(1);
 const pageCount = ref(0);
 const pageSize = ref(12);
+const isSearch = ref(false);
+const filterForm = ref(null);
+
+const filterAnimals = computed(() => {
+  if (filterForm.value === null) {
+    pageCount.value = Math.ceil(animals.length / pageSize.value);
+    return animals;
+  }
+  const newAnimals = animals.filter((item) => {
+    return (
+      item.kind === filterForm.value.kind ||
+      item.color.includes(filterForm.value.color) ||
+      item.gender === filterForm.value.gender ||
+      item.shelterName.place === filterForm.value.shelterName ||
+      item.subid.includes(filterForm.value.subid)
+    );
+  });
+
+  pageCount.value = Math.ceil(newAnimals.length / pageSize.value);
+
+  return newAnimals;
+});
+
 const displayAnimals = computed(() => {
   const skipAmount = (page.value - 1) * pageSize.value;
-  return animals.slice(skipAmount, skipAmount + pageSize.value);
+  return filterAnimals.value.slice(skipAmount, skipAmount + pageSize.value);
+});
+
+const shelterOptions = ref([]);
+
+const form = reactive({
+  // 動物類別
+  kind: null,
+  // 動物性別
+  gender: null,
+  color: null,
+  shelterName: "",
+  // 收容編號
+  subid: null,
 });
 
 (async () => {
   try {
     const { data } = await apiAuth.get("/animals");
     animals.push(...data.result);
-    pageCount.value = Math.ceil(animals.length / pageSize.value);
-    console.log(animals[0]);
+
+    console.log(animals[0].shelterName);
     console.log(animals[0].shelterName.place);
+    //  生成收容所名稱在選擇器上
+    const uniqueShelterNames = [
+      ...new Set(data.result.map((animal) => animal.shelterName.place)),
+    ];
+    const options = uniqueShelterNames.map((name) => ({
+      label: name,
+      value: name,
+    }));
+
+    shelterOptions.value = options;
   } catch (error) {
     console.log(error);
     Swal.fire({
@@ -346,4 +397,24 @@ const displayAnimals = computed(() => {
     });
   }
 })();
+
+// const rules = {
+//   kind: {
+//     trigger: "change",
+//   },
+// };
+
+function filterClick() {
+    isSearch.value = true;
+    filterForm.value = {...form}
+
+}
+
+function clearForm() {
+  form.kind = null;
+  form.gender = null;
+  form.color = null;
+  form.shelterName = "";
+  form.subid = null;
+}
 </script>

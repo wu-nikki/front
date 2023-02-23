@@ -179,9 +179,19 @@
   .n-space {
     gap: 5px 10px;
   }
+  .n-radio-group {
+    .n-radio__dot {
+      --n-box-shadow-active: inset 0 0 0 1px #fd784eff;
+      --n-box-shadow-focus: inset 0 0 0 1px #fd784eff,
+        0 0 0 2px rgba(254, 170, 145, 0.2);
+      --n-box-shadow-hover: inset 0 0 0 1.5px #fd784eff;
+      --n-dot-color-active: rgb(235, 90, 46);
+    }
+  }
   .n-radio__label {
     font-size: 15px;
   }
+
   //
   .n-form-item {
     height: 40px;
@@ -202,10 +212,23 @@
     font-size: 18px;
     font-weight: 700;
   }
+  .n-input {
+    --n-caret-color: #fd784eff !important;
+    --n-border-hover: 1px solid #fd784eff !important;
+    --n-border-focus: 1px solid #fd784eff !important;
+    --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+  }
   .color .n-form-item-blank {
     max-width: 60%;
+    //n-input
   }
-
+  .n-base-selection {
+    --n-border-hover: 1px solid #fd784eff !important;
+    --n-border-focus: 1px solid #fd784eff !important;
+    --n-border-active: 1px solid #fd784eff !important;
+    --n-box-shadow-active: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+    --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+  }
   .selectShelter {
     .n-form-item-blank {
       width: 210px;
@@ -235,7 +258,7 @@
     --n-text-color-focus: rgb(0, 0, 0) !important;
 
     --n-ripple-color: rgb(139, 38, 4) !important;
-    --n-border: 2px solid rgb(255, 202, 184) !important;
+    --n-border: 2px solid rgba(254, 181, 159, 0.7) !important;
     --n-border-hover: 2px solid rgb(252, 170, 145) !important;
     --n-border-pressed: 2px solid #fd784e !important;
     --n-border-focus: 1px solid rgb(255, 227, 218) !important;
@@ -337,13 +360,24 @@ const filterAnimals = computed(() => {
     pageCount.value = Math.ceil(animals.length / pageSize.value);
     return animals;
   }
+  console.log(filterForm);
   const newAnimals = animals.filter((item) => {
     return (
-      item.kind === filterForm.value.kind ||
-      item.color === filterForm.value.color ||
-      item.gender === filterForm.value.gender ||
-      item.shelterName.place === filterForm.value.shelterName ||
-      item.subid.includes(filterForm.value.subid)
+      // item.kind === filterForm.value.kind ||
+      // item.color === filterForm.value.color ||
+      // item.gender === filterForm.value.gender ||
+      // item.shelterName.place === filterForm.value.shelterName ||
+      // item.subid.includes(filterForm.value.subid)
+
+      (filterForm.value.kind === null || item.kind === filterForm.value.kind) &&
+      (filterForm.value.color === null ||
+        item.color === filterForm.value.color) &&
+      (filterForm.value.gender === null ||
+        item.gender === filterForm.value.gender) &&
+      (filterForm.value.shelterName === "" ||
+        item.shelterName.place === filterForm.value.shelterName) &&
+      (filterForm.value.subid === null ||
+        item.subid.includes(filterForm.value.subid))
     );
   });
 
@@ -413,6 +447,6 @@ function clearForm() {
   form.color = null;
   form.shelterName = "";
   form.subid = null;
-  filterForm.value=null
+  filterForm.value = null;
 }
 </script>

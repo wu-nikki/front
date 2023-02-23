@@ -17,6 +17,38 @@
 </template>
 
 <style lang="scss">
+/**
+ * ----------------------------------------
+ * animation text-focus-in
+ * ----------------------------------------
+ */
+ @-webkit-keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+            filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+            filter: blur(0px);
+    opacity: 2;
+  }
+}
+
+
+
 .container {
   overflow: hidden;
   width: 100%;
@@ -28,6 +60,9 @@ h1 {
   padding: 2vw 3vw 2vw 4vw;
   font-size: calc(22px + 1.4vw);
   color: rgb(255, 108, 63);
+  //
+  -webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
 }
 p {
   margin-left: 20px;
@@ -46,6 +81,8 @@ p {
     position: absolute;
     top: calc(0px + 3vw);
     right: 1vw;
+
+    
   }
   .cat1 {
     width: calc(150px + 10vw);

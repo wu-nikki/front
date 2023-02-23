@@ -49,6 +49,7 @@
     <!--  -->
     <!-- <n-dialog-provider v-model="form.dialog"> -->
     <n-modal
+      class="admin-Members-card"
       v-model:show="showModal"
       preset="card"
       title="會員資料"
@@ -92,17 +93,6 @@
             placeholder="修改生日"
           ></n-input>
         </n-form-item-row>
-
-        <!-- <n-form-item-row label="新增照片: " path="img">
-          <n-upload
-            list-type="image-card"
-            v-model:value="form.img"
-            :default-file-list="originalImg"
-            @change="handleChange"
-          /> -->
-        <!--     accept=".jpg,.jpeg,.png,.gif,.tiff,.svg" -->
-        <!-- @preview="handlePreview" -->
-        <!-- </n-form-item-row> -->
 
         <n-form-item-row>
           <n-form-item>
@@ -156,9 +146,16 @@
     font-size: 1.5rem;
   }
 }
-
+.admin-Members-card {
+  max-width: 60%;
+  .n-card__content {
+    padding: 0 var(--n-padding-left) var(--n-padding-bottom)
+      var(--n-padding-left);
+  }
+}
 .n-modal {
   width: 60vw;
+
   .n-button {
     --n-color: rgba(255, 255, 255, 0.8) !important;
     --n-color-hover: #ffe3da !important;

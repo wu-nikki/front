@@ -288,67 +288,67 @@ const btnActive = ref(true);
 
 const options = computed(() => {
   return [
-    {
-      label: "頁面管理",
-      key: "view",
-      children: [
-        {
-          type: "group",
-          key: "group",
-          children: [
-            {
-              key: "divider-1",
-              type: "divider",
-            },
-            {
-              label: () =>
-                h(
-                  RouterLink,
-                  {
-                    to: "/admin/carousel",
-                  },
-                  { default: () => "首頁輪播" }
-                ),
-              key: "admin/CarouselView",
-            },
-            {
-              key: "divider-2",
-              type: "divider",
-            },
-            {
-              label: () =>
-                h(
-                  RouterLink,
-                  {
-                    to: "/admin/FriendlyInformation",
-                  },
-                  { default: () => "友善資訊" }
-                ),
-              key: "admin/FriendlyInformation",
-            },
-            {
-              key: "divider-3",
-              type: "divider",
-            },
-            {
-              label: () =>
-                h(
-                  RouterLink,
-                  {
-                    to: "/admin/AboutMe",
-                  },
-                  { default: () => "關於我們" }
-                ),
-              key: "admin/AboutMeView",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: "divider-4",
-      type: "divider",
-    },
+    // {
+    //   label: "頁面管理",
+    //   key: "view",
+    //   children: [
+    //     {
+    //       type: "group",
+    //       key: "group",
+    //       children: [
+    //         {
+    //           key: "divider-1",
+    //           type: "divider",
+    //         },
+    //         {
+    //           label: () =>
+    //             h(
+    //               RouterLink,
+    //               {
+    //                 to: "/admin/carousel",
+    //               },
+    //               { default: () => "首頁輪播" }
+    //             ),
+    //           key: "admin/CarouselView",
+    //         },
+    //         {
+    //           key: "divider-2",
+    //           type: "divider",
+    //         },
+    //         {
+    //           label: () =>
+    //             h(
+    //               RouterLink,
+    //               {
+    //                 to: "/admin/FriendlyInformation",
+    //               },
+    //               { default: () => "友善資訊" }
+    //             ),
+    //           key: "admin/FriendlyInformation",
+    //         },
+    //         {
+    //           key: "divider-3",
+    //           type: "divider",
+    //         },
+    //         {
+    //           label: () =>
+    //             h(
+    //               RouterLink,
+    //               {
+    //                 to: "/admin/AboutMe",
+    //               },
+    //               { default: () => "關於我們" }
+    //             ),
+    //           key: "admin/AboutMeView",
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
+    // {
+    //   key: "divider-4",
+    //   type: "divider",
+    // },
     //
     {
       label: "收容所管理",
@@ -414,34 +414,34 @@ const options = computed(() => {
       key: "divider-8",
       type: "divider",
     },
-    //
-    {
-      label: "預約管理",
-      key: "Reserve",
-      children: [
-        {
-          type: "group",
-          key: "group3",
-          children: [
-            {
-              key: "divider-9",
-              type: "divider",
-            },
-            {
-              label: () =>
-                h(
-                  RouterLink,
-                  {
-                    to: "/admin/Reserve",
-                  },
-                  { default: () => "預約清單" }
-                ),
-              key: "admin/Reserve",
-            },
-          ],
-        },
-      ],
-    },
+    // //
+    // {
+    //   label: "預約管理",
+    //   key: "Reserve",
+    //   children: [
+    //     {
+    //       type: "group",
+    //       key: "group3",
+    //       children: [
+    //         {
+    //           key: "divider-9",
+    //           type: "divider",
+    //         },
+    //         {
+    //           label: () =>
+    //             h(
+    //               RouterLink,
+    //               {
+    //                 to: "/admin/Reserve",
+    //               },
+    //               { default: () => "預約清單" }
+    //             ),
+    //           key: "admin/Reserve",
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
   ];
 });
 

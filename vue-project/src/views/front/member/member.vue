@@ -289,7 +289,7 @@ const submit = async () => {
       text: "編輯成功",
     });
     // form.dialog = false;
-    // router.go();
+    router.go();
   } catch (error) {
     console.log(error);
     Swal.fire({

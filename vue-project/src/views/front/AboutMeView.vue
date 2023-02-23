@@ -55,7 +55,7 @@ p {
     right: calc(10px + 15vw);
   }
   .dog2 {
-    width: calc(150px + 3vw);
+    width: calc(190px + 3vw);
     border-radius: 400px;
     position: absolute;
     bottom: -3vw;
@@ -70,19 +70,21 @@ p {
   .photo {
     width: 100%;
     height: 50%;
+    // padding: 3vw;
     .dog1 {
       width: calc(150px + 7vw);
       top: calc(10px + 5vw);
-      left: calc(30px + 3vw);
+      left: calc(200px - 25vw);
     }
     .cat1 {
-      width: calc(250px - 10vw);
-      top: calc(120px + 3vw);
-      right: calc(150px + 8vw);
+      width: calc(350px - 18vw);
+      top: calc(130px + 3vw);
+      right: calc(80px + 4vw);
     }
     .dog2 {
-      top: 0vw;
-      right: calc(20px + 5vw);
+      width: calc(100px + 10vw);
+      top: 2vw;
+      right: 5vw;
     }
   }
 }
@@ -93,9 +95,9 @@ p {
       left: 20px;
     }
     .cat1 {
-      width: 150px;
+      width: calc(250px - 5vw);
       top: 140px;
-      right: 150px;
+      right: 130px;
     }
     .dog2 {
       top: 20px;

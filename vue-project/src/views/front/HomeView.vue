@@ -59,7 +59,7 @@
               </n-form-item>
               <!-- path="color" -->
               <n-form-item class="color" label="毛色:" path="color">
-                <n-input v-model:value="form.color" placeholder="黑 白.." />
+                <n-input v-model:value="form.color" placeholder="黑色 白色.." />
               </n-form-item>
               <!--   path="shelterName" -->
               <n-form-item
@@ -330,7 +330,6 @@ const isHome = computed(() => {
 const page = ref(1);
 const pageCount = ref(0);
 const pageSize = ref(12);
-const isSearch = ref(false);
 const filterForm = ref(null);
 
 const filterAnimals = computed(() => {
@@ -341,7 +340,7 @@ const filterAnimals = computed(() => {
   const newAnimals = animals.filter((item) => {
     return (
       item.kind === filterForm.value.kind ||
-      item.color.includes(filterForm.value.color) ||
+      item.color === filterForm.value.color ||
       item.gender === filterForm.value.gender ||
       item.shelterName.place === filterForm.value.shelterName ||
       item.subid.includes(filterForm.value.subid)
@@ -405,9 +404,7 @@ const form = reactive({
 // };
 
 function filterClick() {
-    isSearch.value = true;
-    filterForm.value = {...form}
-
+  filterForm.value = { ...form };
 }
 
 function clearForm() {
@@ -416,5 +413,6 @@ function clearForm() {
   form.color = null;
   form.shelterName = "";
   form.subid = null;
+  filterForm.value=null
 }
 </script>

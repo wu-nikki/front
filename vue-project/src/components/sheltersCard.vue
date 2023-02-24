@@ -44,7 +44,7 @@
     text-align: center;
     border-radius: 10px;
     max-width: 400px;
-    max-height: 400px;
+    max-height: 380px;
     .n-card-cover {
       height: 200px;
       width: 100%;
@@ -58,6 +58,7 @@
       font-size: calc(1.3rem + 0.1vw);
       font-weight: bolder;
       padding: 15px 0 10px 0;
+  flex-grow: 0;
     }
     .n-card__footer {
       font-size: calc(0.9rem + 0.1vw);

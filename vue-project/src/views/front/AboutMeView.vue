@@ -1,144 +1,263 @@
 <template>
   <div class="container">
-    <div class="photo">
-      <img src="../../assets/aboutMe/1.1.jpg" class="dog1" />
-      <img src="../../assets/aboutMe/2.1.jpg" class="dog2" />
-      <img src="../../assets/aboutMe/3.1.jpg" class="cat1" />
+    <div class="text">
+      <h1>MOUHi，我們相信愛是無價的<br />每一隻毛孩都值得一個幸福的家庭。</h1>
+      <p>
+        當您走進 MOUHi
+        的網站，您會發現這是致力於讓每一隻毛孩都能找到一個溫馨家庭的網站。
+        <br />
+        MOUHi就像一隻毛孩的名字，讓人聯想到可愛、親密和溫暖。<br />
+        通過我們的網站，讓毛孩和有愛心的人們可以輕鬆地連接起來，您可以輕鬆地搜索最適合您的毛孩，並加入毛孩收藏。我們的網站不僅提供了有關毛孩友善資訊的認養資源，在往後還能讓您可以預約收容所，讓您準備好接納新的家庭成員。
+      </p>
+      <img src="../../assets/aboutMe/bg1.1.png" class="bg1" />
+      <img src="../../assets/aboutMe/bigs.png" class="dogSmall" />
     </div>
+    <div class="photo">
+      <!-- <img src="../../assets/aboutMe/1.1.jpg" class="dog1" />
+      <img src="../../assets/aboutMe/2.1.jpg" class="dog2" />
+      <img src="../../assets/aboutMe/3.1.jpg" class="cat1" /> -->
+      <!-- <img src="../../assets/aboutMe/bg2.png" class="bg2" /> -->
+      <div class="bg2"></div>
 
-    <h1>MOUHi，我們相信愛是無價的<br />每一隻毛孩都值得一個幸福的家庭。</h1>
-    <p>
-      當您走進 MOUHi
-      的網站，您會發現這是致力於讓每一隻毛孩都能找到一個溫馨家庭的網站。
-      MOUHi就像一隻毛孩的名字，讓人聯想到可愛、親密和溫暖。<br />
-      通過我們的網站，讓毛孩和有愛心的人們可以輕鬆地連接起來，您可以輕鬆地搜索最適合您的毛孩，並加入毛孩收藏。我們的網站不僅提供了有關毛孩友善資訊的認養資源，在往後還能讓您可以預約收容所，讓您準備好接納新的家庭成員。
-    </p>
+      <img src="../../assets/aboutMe/big2.png" class="dog" />
+    </div>
   </div>
 </template>
 
 <style lang="scss">
-/**
- * ----------------------------------------
- * animation text-focus-in
- * ----------------------------------------
- */
- @-webkit-keyframes text-focus-in {
+// h1
+/** animation text-focus-in */
+@-webkit-keyframes text-focus-in {
   0% {
     -webkit-filter: blur(12px);
-            filter: blur(12px);
+    filter: blur(12px);
     opacity: 0;
   }
   100% {
     -webkit-filter: blur(0px);
-            filter: blur(0px);
+    filter: blur(0px);
     opacity: 1;
   }
 }
 @keyframes text-focus-in {
   0% {
     -webkit-filter: blur(12px);
-            filter: blur(12px);
+    filter: blur(12px);
     opacity: 0;
   }
   100% {
     -webkit-filter: blur(0px);
-            filter: blur(0px);
+    filter: blur(0px);
     opacity: 2;
   }
 }
 
+// dog
+/*** animation fade-in-fwd */
+ @-webkit-keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-fwd {
+  0% {
+    -webkit-transform: translateZ(-80px);
+            transform: translateZ(-80px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    opacity: 1;
+  }
+}
 
+
+// bg2
+/*** animation fade-in-right */
+ @-webkit-keyframes fade-in-right {
+  0% {
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-right {
+  0% {
+    -webkit-transform: translateX(50px);
+            transform: translateX(50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// bg1
+/*** animation fade-in-left */
+ @-webkit-keyframes fade-in-left {
+  0% {
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-left {
+  0% {
+    -webkit-transform: translateX(-50px);
+            transform: translateX(-50px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 .container {
-  overflow: hidden;
+  display: flex;
   width: 100%;
-  height: 91vh;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
+.text {
+  z-index: 1;
+  width: 75vw;
+  h1 {
+    float: left;
+    margin: 5vw 0px 1vw 11vw;
 
-h1 {
-  margin-left: 20px;
-  padding: 2vw 3vw 2vw 4vw;
-  font-size: calc(22px + 1.4vw);
-  color: rgb(255, 108, 63);
-  //
-  -webkit-animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
-	        animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    padding-left: 10vw;
+    font-size: calc(22px + 1.4vw);
+    color: rgb(255, 108, 63);
+    //
+    -webkit-animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+      both;
+    animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  }
+  p {
+    width: calc(400px + 18vw);
+    float: left;
+    margin: 0vw 0px 1vw 11vw;
+    padding-left: 10vw;
+    font-size: calc(14px + 0.2vw);
+    line-height: 2;
+    color: rgb(21, 4, 44);
+    -webkit-animation: text-focus-in 2s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+      both;
+    animation: text-focus-in 2s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  }
+  .dogSmall {
+    height: calc(100px + 20vw);
+    position: absolute;
+    bottom: 0vw;
+    left: calc(10px + 0.5vw);
+    overflow: hidden;
+  }
 }
-p {
-  margin-left: 20px;
-  padding-left: 4vw;
+.bg1 {
+  float: left;
+  width: 90vw;
+  height: calc(250px + 20vw);
+  z-index: -1;
+  position: absolute;
+  bottom: 0vw;
+  left: -4vw;
+
+  -webkit-animation: fade-in-left 0.8s linear both;
+	        animation: fade-in-left 0.8s linear both;
 }
 
 .photo {
   float: right;
   width: 45vw;
-  height: 90%;
+  height: 100%;
   position: relative;
 
-  .dog1 {
-    width: calc(100px + 7vw);
-    border-radius: 20vw;
+  .bg2 {
+    width: calc(30px + 30vw);
+    height: calc(30px + 30vw);
+    border-radius: 300px;
     position: absolute;
-    top: calc(0px + 3vw);
-    right: 1vw;
+    top: calc(30px + 4vw);
+    right: 5px;
+    background-color: rgb(247, 199, 160);
 
-    
+    -webkit-animation: fade-in-right 0.8s linear both;
+	        animation: fade-in-right 0.8s linear both;
   }
-  .cat1 {
-    width: calc(150px + 10vw);
-    border-radius: 400px;
+  .dog {
+    z-index: 3;
+    width: calc(350px + 20vw);
     position: absolute;
-    top: calc(190px - 5vw);
-    right: calc(10px + 15vw);
-  }
-  .dog2 {
-    width: calc(190px + 3vw);
-    border-radius: 400px;
-    position: absolute;
-    bottom: -3vw;
-    right: calc(150px - 8vw);
+    bottom: 0px;
+    right: 10vw;
+    filter: drop-shadow(1px 5px 0.15rem rgb(253, 236, 222));
+    -webkit-animation: fade-in-fwd 1s ease-in-out both;
+	        animation: fade-in-fwd 1s ease-in-out both;
   }
 }
 @media (max-width: 768px) {
   .container {
     display: flex;
-    flex-direction: column;
+  }
+  .text {
+    h1 {
+      float: left;
+      font-size: calc(24px + 1vw);
+      width: 100%;
+      padding-left: 4vw;
+      margin-left: 4vw;
+    }
+    p {
+      width: calc(410px + 10vw);
+
+      float: left;
+      padding-left: 4vw;
+      margin-left: 4vw;
+    }
+    .dogSmall {
+      visibility: hidden;
+    }
   }
   .photo {
-    width: 100%;
-    height: 50%;
-    // padding: 3vw;
-    .dog1 {
-      width: calc(150px + 7vw);
-      top: calc(10px + 5vw);
-      left: calc(200px - 25vw);
-    }
-    .cat1 {
-      width: calc(350px - 18vw);
-      top: calc(130px + 3vw);
-      right: calc(80px + 4vw);
-    }
-    .dog2 {
-      width: calc(100px + 10vw);
-      top: 2vw;
-      right: 5vw;
+    .bg2 {
+      width: 250px;
+      height: 250px;
+
+      top: calc(20px + 7vw);
     }
   }
 }
+
 @media (max-width: 545px) {
-  .photo {
-    .dog1 {
-      top: 20px;
-      left: 20px;
+  .text {
+    h1 {
+      font-size: calc(18px + 1vw);
     }
-    .cat1 {
-      width: calc(250px - 5vw);
-      top: 140px;
-      right: 130px;
-    }
-    .dog2 {
-      top: 20px;
-      right: 20px;
+    p {
+      width: calc(350px + 10vw);
     }
   }
 }

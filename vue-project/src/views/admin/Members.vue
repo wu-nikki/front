@@ -155,7 +155,13 @@
 }
 .n-modal {
   width: 60vw;
-
+  .n-input {
+    --n-caret-color: #fd784eff !important;
+    --n-border-hover: 1px solid #fd784eff !important;
+    --n-border-focus: 1px solid #fd784eff !important;
+    --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+    --n-border-radius: 12px !important;
+  }
   .n-button {
     --n-color: rgba(255, 255, 255, 0.8) !important;
     --n-color-hover: #ffe3da !important;

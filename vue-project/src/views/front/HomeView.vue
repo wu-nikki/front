@@ -58,10 +58,19 @@
                 </n-radio-group>
               </n-form-item>
               <!-- path="color" -->
-              <n-form-item class="color" label="毛色:" path="color">
+              <!-- <n-form-item class="color" label="毛色:" path="color">
                 <n-input v-model:value="form.color" placeholder="黑色 白色.." />
+              </n-form-item> -->
+              <n-form-item class="color" label="毛色: " path="color">
+                <n-select
+                  v-model:value="form.color"
+                  placeholder=""
+                  :options="colorOptions"
+                />
+                <!-- colorOptions 選單表 -->
               </n-form-item>
-              <!--   path="shelterName" -->
+
+              <!--   path="colorName" -->
               <n-form-item
                 class="selectShelter"
                 label="選擇收容所: "
@@ -90,6 +99,7 @@
                   >
                     搜尋
                   </n-button>
+
                   <n-button
                     class="cleanBtn"
                     round
@@ -217,6 +227,7 @@
     --n-border-hover: 1px solid #fd784eff !important;
     --n-border-focus: 1px solid #fd784eff !important;
     --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+    --n-border-radius: 12px !important;
   }
   .color .n-form-item-blank {
     max-width: 60%;
@@ -228,6 +239,7 @@
     --n-border-active: 1px solid #fd784eff !important;
     --n-box-shadow-active: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
     --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+    --n-border-radius: 12px !important;
   }
   .selectShelter {
     .n-form-item-blank {
@@ -248,7 +260,22 @@
   .n-button {
     margin: 0px 0.8rem;
   }
-  .filterBtn,
+  .filterBtn {
+    margin: 0px 1rem;
+    font-size: 16px;
+    width: 100px;
+    --n-text-color: rgb(58, 58, 58) !important;
+    --n-text-color-hover: rgb(253, 145, 112) !important;
+    --n-text-color-pressed: #fd784eff !important;
+    --n-text-color-focus: rgb(0, 0, 0) !important;
+
+    --n-ripple-color: rgb(139, 38, 4) !important;
+    --n-border: 3px solid rgb(252, 169, 144) !important;
+    --n-border-hover: 2px solid rgb(252, 170, 145) !important;
+    --n-border-pressed: 2px solid #fd784e !important;
+    --n-border-focus: 1px solid rgb(255, 227, 218) !important;
+  }
+
   .cleanBtn {
     margin: 0px 1rem;
     font-size: 15px;
@@ -370,7 +397,7 @@ const filterAnimals = computed(() => {
       // item.subid.includes(filterForm.value.subid)
 
       (filterForm.value.kind === null || item.kind === filterForm.value.kind) &&
-      (filterForm.value.color === null ||
+      (filterForm.value.color === "" ||
         item.color === filterForm.value.color) &&
       (filterForm.value.gender === null ||
         item.gender === filterForm.value.gender) &&
@@ -392,13 +419,13 @@ const displayAnimals = computed(() => {
 });
 
 const shelterOptions = ref([]);
-
+const colorOptions = ref([]);
 const form = reactive({
   // 動物類別
   kind: null,
   // 動物性別
   gender: null,
-  color: null,
+  color: "",
   shelterName: "",
   // 收容編號
   subid: null,
@@ -421,6 +448,14 @@ const form = reactive({
     }));
 
     shelterOptions.value = options;
+
+    const uniqueColor = [...new Set(data.result.map((animal) => animal.color))];
+    const optionsC = uniqueColor.map((name) => ({
+      label: name,
+      value: name,
+    }));
+
+    colorOptions.value = optionsC;
   } catch (error) {
     console.log(error);
     Swal.fire({

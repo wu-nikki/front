@@ -186,6 +186,7 @@
   }
   .n-p {
     margin-top: 5px;
+    line-height: 1.7;
     font-size: 14px;
     font-weight: normal;
     text-align: left;

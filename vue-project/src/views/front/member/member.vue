@@ -128,6 +128,13 @@
   .n-input {
     width: 27vw;
   }
+  .n-input {
+    --n-caret-color: #fd784eff !important;
+    --n-border-hover: 1px solid #fd784eff !important;
+    --n-border-focus: 1px solid #fd784eff !important;
+    --n-box-shadow-focus: 0 0 0 2px rgba(254, 170, 145, 0.2) !important;
+    --n-border-radius: 12px !important;
+  }
   .n-form-item-feedback-wrapper {
     grid-area: none;
   }

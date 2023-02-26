@@ -1,0 +1,1 @@
+import{_ as r}from"../vue3-img-input/vue3-img-input.a69b1d83.js";import"../@vue/@vue.c9127f92.js";const e={};function t(c,_){return"\u6703\u54E1\u9810\u7D04"}const s=r(e,[["render",t]]);export{s as default};

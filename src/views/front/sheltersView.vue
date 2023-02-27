@@ -105,19 +105,19 @@ const city = [
   },
   {
     title: "中部",
-    list: [],
+    list: ["苗栗縣","臺中市","南投縣","彰化縣"],
   },
   {
     title: "南部",
-    list: [],
+    list: ["高雄市","嘉義市","嘉義縣","臺南市","屏東縣",],
   },
   {
     title: "東部",
-    list: [],
+    list: ["宜蘭縣","花蓮縣","臺東縣",],
   },
   {
     title: "離島",
-    list: ["澎湖縣"],
+    list: ["澎湖縣","金門縣","連江縣",],
   },
 ];
 
@@ -125,18 +125,9 @@ const page = ref(1);
 const pageCount = ref(0);
 const pageSize = ref(12);
 
-// const filtershelters1 = computed(() => {
-//   return;
-//   const shelters1 = shelters.filter((item) => {
-//     return (item.cityName.includes(
-//       "臺北市" && "新北市" && "基隆市" && "桃園市" && "新竹市" && "新竹縣"
-//     ));
-//   });
-//   pageCount.value = Math.ceil(shelters.length / pageSize.value);
-//   return shelters1;
-// });
 
-const filtershelters1 = computed(() => {
+
+const filtershelters = computed(() => {
   if (activeButton.value === buttonList[0]) {
     pageCount.value = Math.ceil(shelters.length / pageSize.value);
     return shelters;
@@ -156,7 +147,7 @@ const filtershelters1 = computed(() => {
 
 const displayshelters = computed(() => {
   const skipAmount = (page.value - 1) * pageSize.value;
-  return filtershelters1.value.slice(skipAmount, skipAmount + pageSize.value);
+  return filtershelters.value.slice(skipAmount, skipAmount + pageSize.value);
 });
 (async () => {
   try {

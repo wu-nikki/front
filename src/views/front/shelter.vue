@@ -61,7 +61,11 @@
       </n-layout>
     </div>
     <div id="map">
-      <Map v-if="shelter.lat" :latitude="Number(shelter.lat)" :longitude="Number(shelter.lon)" />
+      <Map
+        v-if="shelter.lat"
+        :latitude="Number(shelter.lat)"
+        :longitude="Number(shelter.lon)"
+      />
       <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -129,7 +133,7 @@ body {
   }
 
   .n-layout-sider__border {
-    --n-border-color: rgb(245, 245, 245);
+    --n-border-color: rgb(255, 255, 255);
   }
   .n-h1 {
     font-size: calc(1rem + 1.1vw);
@@ -161,6 +165,7 @@ body {
 #map {
   width: 50vw;
   height: 100vh;
+position: relative;
 }
 .btns {
   z-index: 2;
@@ -239,12 +244,12 @@ body {
 </style>
 
 <script setup>
-import { reactive, ref  } from "vue";
+import { reactive, ref } from "vue";
 import { apiAuth } from "@/plugins/axios";
 import { useRoute, useRouter } from "vue-router";
 import { Swal } from "sweetalert2";
 import { useUserStore } from "@/stores/user";
-import Map from '@/components/Map.vue';
+import Map from "@/components/Map.vue";
 // Router是跳頁 ，Route是取現在路由資訊用
 const route = useRoute();
 const imageCount = ref(0);
@@ -271,7 +276,6 @@ const home = () => {
   router.go(-1);
 };
 
-// *** 放置地圖
 (async () => {
   try {
     const { data } = await apiAuth.get("/shelters/" + route.params.id);

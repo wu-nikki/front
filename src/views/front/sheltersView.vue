@@ -46,13 +46,12 @@
     }
     --n-text-color-hover: rgb(253, 145, 112) !important;
     --n-text-color-pressed: #fd784eff !important;
-    --n-text-color-focus: rgb(0, 0, 0) !important;
-    --n-text-color-active: #fd784eff !important;
-    --n-border-active: #fd784eff !important;
+    --n-text-color-focus: rgb(255, 64, 0) !important;
+
 
     --n-border-hover: 2px solid rgb(252, 170, 145) !important;
     --n-border-pressed: 2px solid #fd784e !important;
-    --n-border-focus: 1px solid rgb(255, 227, 218) !important;
+    --n-border-focus: 3px solid rgb(255, 64, 0) !important;
   }
   .btn-circle1 {
     --n-border-radius: 20px !important;

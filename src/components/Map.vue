@@ -1,9 +1,12 @@
 <template>
-  <div ref="map" style="width: 400px; height: 400px;"></div>
+  <div ref="map"  style="width: 47vw; height:87vh; position: absolute; top:1vw; left: 1vw;
+  "></div>
 </template>
+<style lang="scss">
 
+</style>
 <script setup>
-import { onMounted, ref, defineProps } from 'vue';
+import { onMounted, ref, defineProps } from "vue";
 const map = ref(null);
 const props = defineProps({
   latitude: {
@@ -13,10 +16,10 @@ const props = defineProps({
   longitude: {
     type: Number,
     required: true,
-  }
+  },
 });
 
-onMounted(initMap)
+onMounted(initMap);
 function initMap() {
   const google = window.google;
   const latLng = new google.maps.LatLng(props.latitude, props.longitude);

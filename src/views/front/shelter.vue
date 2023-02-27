@@ -51,7 +51,6 @@
                 ><n-text>收容所開放時間:</n-text>
                 <p>{{ shelter.openTime }}</p>
               </n-h3>
-
               <!-- <n-h3
               ><n-text>所在收容所: </n-text>
               <span>{{  shelter.place }} </span></n-h3
@@ -62,7 +61,7 @@
       </n-layout>
     </div>
     <div id="map">
-      123
+      <Map :latitude="Number(shelter.lat)" :longitude="Number(shelter.lon)" />
       <!-- <l-map ref="map" v-model:zoom="zoom" :center="[47.41322, -1.219482]">
       <l-tile-layer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -240,13 +239,12 @@ body {
 </style>
 
 <script setup>
-import { reactive } from "vue";
+import { reactive, ref  } from "vue";
 import { apiAuth } from "@/plugins/axios";
 import { useRoute, useRouter } from "vue-router";
-
 import { Swal } from "sweetalert2";
 import { useUserStore } from "@/stores/user";
-import { ref } from "vue";
+import Map from '@/components/Map.vue';
 // Router是跳頁 ，Route是取現在路由資訊用
 const route = useRoute();
 const imageCount = ref(0);
@@ -274,7 +272,6 @@ const home = () => {
 };
 
 // *** 放置地圖
-
 (async () => {
   try {
     const { data } = await apiAuth.get("/shelters/" + route.params.id);

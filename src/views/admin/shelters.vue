@@ -19,7 +19,7 @@
             <td><n-image width="150" :src="shelter.img[0]" /></td>
             <td>{{ shelter.place }}</td>
             <td>
-              <n-button quaternary circle @click="openDialog(idx)">
+              <n-button quaternary circle @click="openDialog(shelter._id)">
                 <template #icon>
                   <n-icon><CreateOutline /></n-icon>
                 </template>
@@ -237,7 +237,8 @@ const handleChange = (options) => {
   j = options.fileList.map(image => image.file).filter(url => url !== null)
   form.img = [...i, ...j]
 };
-const openDialog = (idx) => {
+const openDialog = (_id) => {
+  const idx =shelters.findIndex((shelters)=>shelters._id===_id)
   // -1 代表目前要新增的東西不在陣列裡面
   originalImg.value.length = 0;
 

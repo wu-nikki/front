@@ -79,7 +79,7 @@
 </template>
 
 <style lang="scss">
-body {
+.main {
   overflow: hidden;
 }
 #Shelter {

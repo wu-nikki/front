@@ -22,6 +22,7 @@
                   <n-input
                     v-model:value="form.password"
                     type="password"
+                    placeholder="輸入密碼"
                     @keydown.enter.prevent
                   />
                 </n-form-item-row>
@@ -69,6 +70,7 @@
                   <n-input
                     v-model:value="form.password"
                     type="password"
+                    placeholder="輸入密碼"
                     @keydown.enter.prevent
                   />
                 </n-form-item-row>
@@ -112,12 +114,7 @@
       border: 1px solid #ffe3da;
     }
   }
-  .n-card {
-    height: auto;
-    .n-card__content {
-      padding: 20px;
-    }
-  }
+
   .login-card {
     position: absolute;
     margin: auto;
@@ -125,8 +122,17 @@
     left: 0;
     bottom: 0;
     right: 0;
-
+display: flex;
+justify-content: center;
+align-items:flex-start;
     width: calc(300px + 9vw);
+    .n-card {
+    height: auto;
+    --n-border-color:rgb(202, 202, 202) !important;
+    .n-card__content {
+      padding: 20px;
+    }
+  }
   }
 
   .n-button {
@@ -153,20 +159,20 @@ const valid = ref(null);
 
 const loading = ref(false);
 const user = useUserStore();
-// const form = reactive({
-//   name: null,
-//   email: null,
-//   cellPhone: null,
-//   account: null,
-//   password: null,
-// });
 const form = reactive({
-  name: "aaaaa",
-  email: "wwwdwa@awda.ee",
-  cellPhone: "2222222222",
-  account: "aaaaa",
-  password: "aaaaa",
+  name: null,
+  email: null,
+  cellPhone: null,
+  account: null,
+  password: null,
 });
+// const form = reactive({
+//   name: "aaaaa",
+//   email: "wwwdwa@awda.ee",
+//   cellPhone: "2222222222",
+//   account: "aaaaa",
+//   password: "aaaaa",
+// });
 
 const rules = {
   name: [

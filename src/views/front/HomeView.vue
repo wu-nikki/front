@@ -354,8 +354,7 @@
     .n-form-item:last-child {
       justify-content: flex-end;
     }
-    .n-button {
-    }
+  
   }
 }
 </style>

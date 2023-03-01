@@ -177,7 +177,7 @@
     max-height: 11rem;
 
     padding: 1rem 1rem 2.3rem 1rem;
-    margin-bottom: 2vw;
+    margin-bottom: calc( 1rem + 1vw);
   }
 
   .n-h4 {
@@ -208,6 +208,10 @@
 }
 
 @media (max-width: 768px) {
+  #FriendlyList {
+    .n-card {
+      margin-bottom:calc( 1rem + 2vw);
+    }}
 }
 
 @media (max-width: 640px) {
@@ -218,6 +222,11 @@
   }
   #FriendlyList {
     .n-card {
+      margin-bottom: 5vw;
+    }
+    .n-p  { -webkit-line-clamp: 3;
+    overflow: hidden;
+
     }
   }
 }

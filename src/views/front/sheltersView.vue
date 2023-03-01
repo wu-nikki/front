@@ -83,6 +83,12 @@
   font-size: 17px;
   font-weight: bolder;
 }
+@media (max-width: 545px) {
+  .shelters-btn {
+  width: 100%;
+  justify-content: center;
+}
+}
 </style>
 
 <script setup>

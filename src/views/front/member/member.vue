@@ -174,6 +174,8 @@
   }
   .member-data {
     margin-top: 50px;
+  height: 50vh;
+
     .n-input {
       width: 35vw;
     }
